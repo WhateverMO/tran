@@ -1,0 +1,106 @@
+body{
+	background: linear-gradient(125deg,#2c3e50,#27ae60,#2980b9,#e74c3c,#8e44ad);
+	background-size: 500%;
+	animation: bjanimation 10s linear infinite;
+	height: 120vh;
+}
+@keyframes bjanimation{
+	
+0%{
+	background-position: 0% 50%;
+}
+50%{
+	background-position: 100% 50%;
+}
+100%{
+	background-position: 0% 50%;
+}
+}
+li{
+	list-style: none;
+}
+a{
+	text-decoration: none;
+	color: #000000;
+}
+a:hover{
+	color: #DB1C29;
+}
+@font-face {
+	font-family:kai;
+	src: url('../font/宋刻本秀楷体.ttf');
+}
+.wel {
+		display: flex;
+		justify-content: center;
+		height: 20vh;
+	}/* //子元素有浮动需要为父元素添加高度 */
+.one {
+	display: inline;
+	padding:20px;
+	font-family:white;
+	font-size: 20px;
+	position: relative;
+	float: left;
+	}
+.twe{
+		display:none;
+		position: absolute;
+	}
+.twe li{
+
+	}
+.one:hover ul {
+    display: block;
+}
+.wel input{
+	padding: 10px;
+	border-radius: 5px;
+	opacity: 0.7;
+	
+}
+.wel button{
+	border-radius: 5px;
+	width: 50px;
+	height: 35px;
+	background-color: #CCCCCC;
+	cursor:pointer;
+}
+#b1{
+	height: 70vh;
+}
+#intro  li{
+margin-bottom: 5vh;
+}
+
+#intro input[type=text]
+{	border-radius: 15px;
+	width: 30vh;
+	height: 4vh;
+	margin-left: 2vh;
+	background-color: #CCCCCC;
+	cursor:pointer;	
+}
+#photo{
+	float:left;
+	margin-left: 60vh;
+}
+#intro{
+	float: right;
+	margin-right: 70vh;
+}
+
+#b2{
+
+}
+#b3{
+	
+}
+
+#footer{
+	height: 20vh;
+	text-align: center;
+}
+#footer li{
+	font-size: small;
+}

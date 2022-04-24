@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+			<link rel="stylesheet" href="{{ url_for('static', filename='css/checkinformation.css') }}" type="text/css">
+	</head>
+	<body>
+		<div class="wel">
+			<ul>
+				<li class='one' style="color: #DB1C29;"><a href="/user/index">rt-books</a></li>
+				<li class='one'><a herf="#"style="color: #DB1C29;">玄幻</a>
+				<ul class='twe animated'>
+				<li><a href="#">英文</a></li>
+				<li><a href="#">俄文</a></li>
+				<li><a href="#">韩文</a></li>
+				<li><a href="#">日文</a></li>
+				</ul></li>			
+				<li class='one'><a herf="#"style="color: #DB1C29;">都市</a>
+				<ul class='twe animated'>
+				<li><a href="#">英文</a></li>
+				<li><a href="#">俄文</a></li>
+				<li><a href="#">韩文</a></li>
+				<li><a href="#">日文</a></li>
+				</ul></li>
+				<li class='one' ><a href="#"style="color: #DB1C29;">仙侠</a>
+				<ul class='twe animated'>
+				<li><a href="#">英文</a></li>
+				<li><a href="#">俄文</a></li>
+				<li><a href="#">韩文</a></li>
+				<li><a href="#">日文</a></li>
+				</ul></li>
+				<li class='one' ><a href="#"style="color: #DB1C29;">历史</a>
+				<ul class='twe animated'>
+				<li><a href="#">英文</a></li>
+				<li><a href="#">俄文</a></li>
+				<li><a href="#">韩文</a></li>
+				<li><a href="#">日文</a></li>
+				</ul></li>
+				<li class='one' ><a herf="#"style="color: #DB1C29;">更多</a></li>
+				<li class='one'>
+				<input type="search" name="" id="" value="查询书籍" style="width: 250px ; height: 30px;" />
+				<button type="button">搜索 </button></li>
+				<li class='one'><a href="/user/login" style="color: #DB1C29;">登录</a></li>
+				<li class='one' ><a href="/user/register" style="color: #DB1C29;">注册</a></li>
+				<li class='one'><a href="/user/user_information" style="color: #DB1C29;">我的信息</a></li>
+			
+			</ul>
+		</div>
+		<!-- 第二部分 -->
+		<div id="all">
+			<div id="check">
+				<ul>
+					<li ><img src="{{ url_for('static', filename='img/headimg.jpg') }}" width="120px"height="120px"></li>
+					<li>用户名:<input type="text" id="username" value="" /></li>
+					<li>rt-books账号：<input type="text" id="num" value="" /></li>
+					<li><div class="mui-input-row mui-checkbox ">
+						性别： <label>women</label>
+						<input name="Checkbox" type="checkbox" checked>
+						<label>men</label>
+						<input name="Checkbox" type="checkbox" checked>
+					</div>
+					</li>
+					<li>生日:<select name="年">
+						<option value="">2000</option>
+							<option value="">2001</option>
+								<option value="">2002</option>
+									<option value="">2003</option>
+					</select>
+					<select name="月">
+						<option value="">1</option>
+							<option value="">2</option>
+								<option value="">3</option>
+									<option value="">4</option>
+										<option value="">5</option>
+					</select>
+					<select name="日">
+						<option value="">1</option>
+							<option value="">2</option>
+								<option value="">3</option>
+									<option value="">4</option>
+										<option value="">5</option>
+					</select></li>
+					<li class="job">职业<select name="">
+						<option value="">学生</option>
+							<option value="">教师</option>
+								<option value="">a</option>
+									<option value="">b</option>
+					</select></li>
+					<li>地区:  <select name="" class='place'>
+						<option value="">重庆</option>
+							<option value=""></option>
+								<option value=""></option>
+									<option value=""></option>
+										<option value=""></option>
+											<option value=""></option>
+					</select></li>
+					<li>简介：<textarea rows="2" cols="20">简介</textarea></li>
+					<li><button type="button">提交修改</button></li>
+				</ul>
+			</div>
+		</div>
+		<!-- 第三部分-->
+		<div id="footer">
+			<ul>
+				<li><a href="#">沪公网安备 31011502001275号增值电信业务经营许可证：沪B2-20080046 互联网ICP备案号：沪B2-20080046-1 出版经营许可证：新出发沪批字第 U3718 号</a></li>
+				<li><a href="#">Copyright © 2002-2022 www.qidian.com All Rights Reserved 版权所有 上海玄霆娱乐信息科技有限公司</a></li>
+				<li><a href="#">网络文化经营许可证：沪网文〔2021〕0374-020号 网络出版服务许可证：（署）网出证（沪）字第055号 营业执照</a></li>
+				<li><a href="#">请所有作者发布作品时务必遵守国家互联网信息管理办法规定，我们拒绝任何色情小说，一经发现，即作删除！举报电话：010-59357051</a></li>
+				<li><a href="#">本站所收录的作品、社区话题、用户评论、用户上传内容或图片等均属用户个人行为。如前述内容侵害您的权益，欢迎举报投诉，一经核实，立即删除，本站不承担任何责任</a></li>
+			</ul>
+		</div>
+			</body>
+			<script type="text/javascript">
+		$('#username').click(function(){
+			var username=$('#username').val();
+			$.get('/user/username',{username:username},function(data){
+			alert(data.msg);
+			$('#username').click(function(){
+				if(data.code==200)
+				window.location.href = "/user/indexsucess";
+			})
+			},'json')//登录用户
+			})
+			</script>
+			

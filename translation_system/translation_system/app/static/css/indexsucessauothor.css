@@ -1,0 +1,266 @@
+ul li{
+	list-style: none;
+}
+a{
+	text-decoration: none;
+	color: #000000;
+}
+a:hover{
+	color: #DB1C29;
+}
+.reconmend img:hover{
+		transform: scale(1.2,1.2);
+}
+@font-face {
+	font-family:big;
+	src: url('../font/世界那么大.ttf');
+}
+@font-face {
+	font-family:kai;
+	src: url('../font/宋刻本秀楷体.ttf');
+}
+@font-face {
+  font-family: 'icomoon';
+  src:  url('../fonts/icomoon.eot?2qiqq5');
+  src:  url('../fonts/icomoon.eot?2qiqq5#iefix') format('embedded-opentype'),
+    url('../fonts/icomoon.ttf?2qiqq5') format('truetype'),
+    url('../fonts/icomoon.woff?2qiqq5') format('woff'),
+    url('../fonts/icomoon.svg?2qiqq5#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+/* 第一部分 */
+/* body{
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
+	background-image: url(../img/b4.jpg);
+	height: 1000px;
+	width: 100%;
+} */
+/* 第二部分 */
+*{
+	padding: 0;
+	margin: 0;
+}
+#n {
+	font-family:kai;
+	font-size: 20px;
+	display: inline-block;
+	margin-left: 15vh;
+	margin-bottom: 2vh;
+	margin-top: 2vh;
+	}	
+.langguge {
+	display: none;
+	position: absolute;
+}
+.lang:hover ul{
+	display: block;
+}
+.lang{
+	position: relative;
+}
+/* 第三部分 */
+.nav{
+display: flex;
+justify-content: center;
+height: 10%;
+}
+.nav button{
+	width: 4%;
+	height: 2%px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+.nav input{
+	display: flex;
+	height: 100%;
+	width: 30%;
+	border-radius: 5px;
+}
+/* 第四部分 */
+.center{
+	font-family:kai;
+	font-size: 20px;
+	display: flex;
+	margin-top:2%;
+	height: 200px;
+}
+.choose{
+display:flex;
+flex-direction: column;
+}
+.choose ul li{
+display: flex;
+margin-left: 7%;
+}
+.choose ul{
+display: flex;
+justify-content: center;
+margin-top: 2%;
+}
+.masterpiece ul {
+	display: flex;
+	flex-direction: row;
+	margin-bottom: 15%;
+}
+.masterpiece {
+display: flex;
+flex-direction: column;
+width: 15%;
+margin-left: 6%;
+}
+.masterpiece ul li{
+	display: flex;
+	margin-left: 10%;
+}
+#banner{
+	width: 60%;
+}
+.imgList{
+		position: relative;
+	}
+.imgList li {
+	  display: inline-block;
+	  position: absolute;
+ }
+ .leftBtn{
+position: absolute;
+left: -50%
+top:10%;
+z-index:99;/*层级调高*/
+ }
+   .rightBtn{
+	position: absolute;
+	right: 350px;
+	 top:300px;
+	    z-index:99;/*层级调高*/
+   }
+   .leftBtn:hover,.rightBtn:hover{
+     background-color:rgba(0, 0, 0, 0.2);
+   }
+   /* 小白点 */
+   .focusList{
+     right:550px;
+	 position: absolute;
+     z-index:999;/*层级调高*/
+	 top: 400px;
+
+   }
+   .focusList a{/* 小白点 */
+     float: left;
+     width:15px;
+     height: 15px;
+     border-radius: 50%;
+     margin-left:15px;
+     background: rgba(0, 0, 0, .4);
+   }
+   .focusList a.cur{
+     background: rgba(255, 255, 255, .6);
+   }
+.hot{
+	display: flex;
+
+}
+/* 第五部分 */
+.reconmend{
+	font-family:kai;
+	font-size: 20px;
+	margin-left: 5%;
+	margin-top: 10%;
+	border-top: 1px solid black;
+	margin-right: 5%;
+}
+#reconmendlist{
+	margin-bottom: 1%;
+}
+.reconmend span{
+	margin-bottom: 4%;
+}
+.week{
+	display: inline-block;
+	margin-left: 6%;
+}
+.weekl{
+	float: left;
+}
+.weekr{
+	float: right;
+}
+.editor{
+	display: inline-block;
+	margin-left: 8%;
+}
+.editorl{
+	float: left;
+}
+.editorr{
+	float: right;
+}
+.new{
+	float: right;
+	margin-right: 100px;
+}
+.newl{
+	float: left;
+}
+.newr{
+	float: right;
+}
+#share{
+	height: 200px;
+	font-family: kai;
+border-top: 1px solid;
+margin-left: 5%;
+margin-right: 5%;
+}
+#share img{
+	float: right;
+	height: 150px;
+	margin-right: 20%;
+}
+#share img:hover{
+transform: scale(1.2,1.2);	
+}
+#share span{
+	float: left;
+	margin-left: 20%;
+}
+#share h1{
+	font-family: kai;
+}
+#hotbook {
+	font-family: kai;
+	margin-left: 5%;
+	margin-right: 5%;
+	border-top: 1px solid;
+}
+#hotbook h1{
+	margin-bottom: 30px;
+}
+#hotbook img{
+	margin-left: 80px;
+	margin-bottom: 20px;
+}
+#hotbook img:hover	
+{transform: scale(1.2,1.2);
+	}
+	
+#readingfeel{
+		font-family: kai;
+		margin-left: 40px;
+		margin-right: 100px;
+		border-top: 1px solid;
+		height: 200px;
+	}
+/* 第六部分 */
+#footer li{
+	font-size: small;
+}
+#footer{
+text-align: center;
+
+}

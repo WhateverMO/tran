@@ -1,0 +1,125 @@
+li{
+	list-style: none;
+}
+a{
+	text-decoration: none;
+	color: #000000;
+}
+@font-face {
+	font-family:big;
+	src: url('../font/世界那么大.ttf');
+}
+@font-face {
+	font-family:kai;
+	src: url('../font/宋刻本秀楷体.ttf');
+}
+@font-face {
+	font-family:white;
+	src: url('../font/包图小白体.ttf');
+}
+.wel {
+		width: 1200px;
+		height: 100px;
+	}/* //子元素有浮动需要为父元素添加高度 */
+.one {
+	display: inline;
+	padding:22px;
+	font-family:white;
+	font-size: 20px;
+	position: relative;
+	float: left;
+	}
+.twe{
+		display:none;
+		position: absolute;
+	}
+.twe li{
+		width: 40px;
+		border-bottom: 1px solid #667163;
+	}
+.one:hover ul {
+    display: block;
+}
+@keyframes fade{
+		from{opacity: 0;}
+		to{opacity: 1;}
+	}
+.animated {
+		animation-duration: 9s;
+		animation:-fill-mode:both;
+	}
+
+/* 第二部分 */
+#all{
+	padding-left: 180px;
+	padding-top: 20px;
+}
+#headl{
+	display: inline-block;
+}
+#headl:hover{
+	transform: scale(1.2,1.2);
+}
+#headr{
+	display: inline-block;
+}
+#headr ul button{
+	border-radius: 2px;
+	color: #db1c29;
+	width: 100px;
+}
+#back{
+	height: 800px;
+}
+#l{
+	float: left;
+	width: 800px;
+}
+#newcontent {
+	overflow: hidden;
+	font-weight: 200;
+	font-size: small;
+}
+#newcontent li h5{
+	display: inline-block;
+	font-weight: 200;
+}
+#newr{
+	padding-right: 50px;
+	float: right;
+}
+#newl{
+	float: left;
+}
+#fan table{
+	width: 800px;
+	height: 200px;
+	text-align: center;
+	font-family: kai;
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+#fan button{
+	width: 100px;
+	height: 20px;
+}
+#r{
+float: right;
+padding-right: 50px;
+}
+#number span{
+	padding-left: 40px;
+}
+#tu span{
+		padding-left: 20px;
+}
+#masterpiece {
+overflow: hidden;
+position: relative;
+}
+#footer li{
+	font-size: small;
+}
+#footer{
+text-align: center;
+}
