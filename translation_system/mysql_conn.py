@@ -5,19 +5,19 @@ from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy import create_engine,and_
 from timeit import default_timer
 
-Host = 'mysqlforshejidasai.mysql.database.azure.com'
-Port = 3306
-Db = 'test_db'
-User = 'sjds@mysqlforshejidasai'
-Password = 'Shejidasai123456'
-Charset='utf8'
-
-# Host = 'rt-books.ltd'
+# Host = 'mysqlforshejidasai.mysql.database.azure.com'
 # Port = 3306
 # Db = 'test_db'
-# User = 'root'
+# User = 'sjds@mysqlforshejidasai'
 # Password = 'Shejidasai123456'
 # Charset='utf8'
+
+Host = 'localhost'
+Port = 3306
+Db = 'test_db'
+User = 'root'
+Password = 'Shejidasai123456'
+Charset='utf8'
 
 # Host = 'localhost'
 # Port = 3306
