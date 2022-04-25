@@ -14,7 +14,7 @@ class authoridpool(Base):
 
 class bookidpool(Base):
     __tablename__ = 'bookidpool'
-    book_id = Column(Integer,primary_key=True,autoincrement=True)
+    b_id = Column(Integer,primary_key=True,autoincrement=True)
 
 class users(Base):
     __tablename__ = 'users'
@@ -42,25 +42,15 @@ class bookclass(Base):
     __tablename__ = 'bookclass'
     bookclass_id = Column(Integer,primary_key=True,autoincrement=True)
 
-class chinesebookclass(Base):
-    __tablename__ = 'chinesebookclass'
-    chinese_bookclass_name = Column(String(32),primary_key=True)
-    bookclass_id = Column(Integer,ForeignKey(bookclass.bookclass_id))
-
 class languages(Base):
     __tablename__ = 'languages'
     lang_id = Column(Integer,primary_key=True,autoincrement=True)
-
-class chineselanguages(Base):
-    __tablename__ = 'chineselanguages'
-    lang_id = Column(Integer,ForeignKey(languages.lang_id))
-    chineselang = Column(String(32),primary_key=True)
 
 class booklib(Base):
     __tablename__ = 'booklib'
     b_id = Column(Integer,primary_key=True)
     author_id = Column(Integer,ForeignKey(authores.author_id),primary_key=True)
-    book_lang = Column(Integer,ForeignKey(languages.lang_id),primary_key=True)
+    lang_id = Column(Integer,ForeignKey(languages.lang_id),primary_key=True)
     bc_id = Column(Integer,ForeignKey(bookclass.bookclass_id))
     support_lang = Column(String(64))
     cover_path = Column(String(64))
@@ -69,21 +59,36 @@ class booklib(Base):
 class bookcontent(Base):
     __tablename__ = 'bookcontent'
     b_id = Column(Integer,ForeignKey(booklib.b_id),primary_key=True)
-    content_no = Column(Integer,primary_key=True,autoincrement=True)
+    author_id = Column(Integer, ForeignKey(booklib.author_id), primary_key=True)
+    lang_id = Column(Integer, ForeignKey(booklib.lang_id), primary_key=True)
+    c_no = Column(Integer,primary_key=True,unique=True)
+
+class chinesebookclass(Base):
+    __tablename__ = 'chinesebookclass'
+    chinese_bookclass_name = Column(String(32),primary_key=True)
+    bookclass_id = Column(Integer,ForeignKey(bookclass.bookclass_id))
+
+class chineselanguages(Base):
+    __tablename__ = 'chineselanguages'
+    lang_id = Column(Integer,ForeignKey(languages.lang_id))
+    chineselang = Column(String(32),primary_key=True)
 
 class chinesebooklib(Base):
     __tablename__ = 'chinesebooklib'
     b_id = Column(Integer,ForeignKey(booklib.b_id),primary_key=True)
+    author_id = Column(Integer, ForeignKey(booklib.author_id), primary_key=True)
+    lang_id = Column(Integer, ForeignKey(booklib.lang_id), primary_key=True)
     name = Column(String(32),nullable=False)
     desc = Column(String(256),default=None)
 
 class chinesecontent(Base):
     __tablename__ = 'chinesecontent'
-    b_id = Column(Integer,ForeignKey(booklib.b_id),primary_key=True)
-    c_no = Column(Integer,ForeignKey(bookcontent.content_no),primary_key=True)
+    b_id = Column(Integer,ForeignKey(bookcontent.b_id),primary_key=True)
+    author_id = Column(Integer, ForeignKey(bookcontent.author_id), primary_key=True)
+    lang_id = Column(Integer, ForeignKey(bookcontent.lang_id), primary_key=True)
+    c_no = Column(Integer,ForeignKey(bookcontent.c_no),primary_key=True)
     title = Column(String(64),nullable=False)
     text_path = Column(String(128),nullable=False)
-
 
 class englishbookclass(Base):
     __tablename__ = 'englishbookclass'
@@ -98,13 +103,17 @@ class englishlanguages(Base):
 class englishbooklib(Base):
     __tablename__ = 'englishbooklib'
     b_id = Column(Integer,ForeignKey(booklib.b_id),primary_key=True)
+    author_id = Column(Integer, ForeignKey(booklib.author_id), primary_key=True)
+    lang_id = Column(Integer, ForeignKey(booklib.lang_id), primary_key=True)
     name = Column(String(32),nullable=False)
     desc = Column(String(256),default=None)
 
 class englishcontent(Base):
     __tablename__ = 'englishcontent'
-    b_id = Column(Integer,ForeignKey(booklib.b_id),primary_key=True)
-    c_no = Column(Integer,ForeignKey(bookcontent.content_no),primary_key=True)
+    b_id = Column(Integer,ForeignKey(bookcontent.b_id),primary_key=True)
+    author_id = Column(Integer, ForeignKey(bookcontent.author_id), primary_key=True)
+    lang_id = Column(Integer, ForeignKey(bookcontent.lang_id), primary_key=True)
+    c_no = Column(Integer,ForeignKey(bookcontent.c_no),primary_key=True)
     title = Column(String(64),nullable=False)
     text_path = Column(String(128),nullable=False)
 
@@ -122,13 +131,17 @@ class japaneselanguages(Base):
 class japanesebooklib(Base):
     __tablename__ = 'japanesebooklib'
     b_id = Column(Integer, ForeignKey(booklib.b_id), primary_key=True)
+    author_id = Column(Integer, ForeignKey(booklib.author_id), primary_key=True)
+    lang_id = Column(Integer, ForeignKey(booklib.lang_id), primary_key=True)
     name = Column(String(32), nullable=False)
     desc = Column(String(256), default=None)
 
 class japanesecontent(Base):
     __tablename__ = 'japanesecontent'
-    b_id = Column(Integer, ForeignKey(booklib.b_id), primary_key=True)
-    c_no = Column(Integer, ForeignKey(bookcontent.content_no), primary_key=True)
+    b_id = Column(Integer, ForeignKey(bookcontent.b_id), primary_key=True)
+    author_id = Column(Integer, ForeignKey(bookcontent.author_id), primary_key=True)
+    lang_id = Column(Integer, ForeignKey(bookcontent.lang_id), primary_key=True)
+    c_no = Column(Integer, ForeignKey(bookcontent.c_no), primary_key=True)
     title = Column(String(64), nullable=False)
     text_path = Column(String(128), nullable=False)
 

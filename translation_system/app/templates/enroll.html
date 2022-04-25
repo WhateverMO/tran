@@ -3,14 +3,21 @@
 	<head>
 		<meta charset="utf-8">
 		<title></title>
-		<link rel="stylesheet" href="{{ url_for('static', filename='css/enroll.css') }}" type="text/css">
+		<link rel="stylesheet" href="{{ url_for('static' ,filename='css/enroll.css')}}" type="text/css">
 		<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
 	</head>
 	<body>
 		<!-- 第一部分 -->
 	<div class="wel">
 		<ul>
-			<li class='one' ><a href="index.html" >rt-books</a></li>
+			<li class='one' ><a href="/user/index">rt-books</a></li>
+			<li class='one'><a herf="#">切换语言</a>
+			<ul class='twe animated'>
+			<li><a href="#">英文</a></li>
+			<li><a href="#">俄文</a></li>
+			<li><a href="#">韩文</a></li>
+			<li><a href="#">日文</a></li>
+			</ul></li>	
 			<li class='one'><a herf="#">玄幻</a>
 			<ul class='twe animated'>
 			<li><a href="#">英文</a></li>
@@ -43,61 +50,61 @@
 			<li class='one'>
 			<input type="search" name="" id="search" value="查询书籍" style="width: 250px ; height: 30px;" />
 			<button type="button">搜索 </button></li>
-			<li class='one'><a href="register.html" >登录</a></li>
-			<li class='one' ><a href="enroll.html" >注册</a></li>
+			<li class='one' ><a href="/user/register" >注册</a></li>
 		
 		</ul>
 	</div>
 		<!-- 第二部分 -->
 		<div id="box">
 			<div id="core3">
-				<img src="{{ url_for('static', filename='/img/welcom.jpeg') }}"width="300px"height="300px" >
+				<img src="{{ url_for('static',filename='img/welcom.jpeg')}}"width="300px"height="300px" >
 			</div>
 		<div id="core4">
-			<h1 style="font-family: 'kai';">用户登录</h4>
-			<span class="name"></span>用户名:&nbsp<input type="text" id="name" value="请输入你的用户名" /><br /><br />
+			<h1 style="font-family: 'kai';">用户登录</h1>
+			<span class="name">&nbsp</span>用户id：&nbsp<input type="text" id="user_id" value="请输入你的用户id" /><br /><br />
 			<span class="ma"> </span>密码 : &nbsp<input type="password" name="" id="password" value="请输入密码" /><br /><br />
-		   <span class="yan"> </span>验证码:&nbsp <input type="text" id="code" value="请输入手机验证码" /><br /><br />
 		<button type="button"id="button">立即登录</button><br /><br />
 		<div id="register">
-			没有账号，点击<a href="register.html">注册</a>
+			没有账号，点击<a href="/user/register">注册</a>
 		</div>
 		</div>	
 		</div>
 		<!-- 第三部分-->
 		<div id="footer">
 			<ul>
-				<li><a href="#">沪公网安备 31011502001275号增值电信业务经营许可证：沪B2-20080046 互联网ICP备案号：沪B2-20080046-1 出版经营许可证：新出发沪批字第 U3718 号</a></li>
-				<li><a href="#">Copyright © 2002-2022 www.qidian.com All Rights Reserved 版权所有 上海玄霆娱乐信息科技有限公司</a></li>
-				<li><a href="#">网络文化经营许可证：沪网文〔2021〕0374-020号 网络出版服务许可证：（署）网出证（沪）字第055号 营业执照</a></li>
-				<li><a href="#">请所有作者发布作品时务必遵守国家互联网信息管理办法规定，我们拒绝任何色情小说，一经发现，即作删除！举报电话：010-59357051</a></li>
+				
+				<li><a href="#">重庆理工大学计算机科学与工程学院</a></li>
 				<li><a href="#">本站所收录的作品、社区话题、用户评论、用户上传内容或图片等均属用户个人行为。如前述内容侵害您的权益，欢迎举报投诉，一经核实，立即删除，本站不承担任何责任</a></li>
 			</ul>
 		</div>
 		
 		<script>
-            function login(){
-                		window.location.href = "/user/indexsucess";
-            }
+		function readerenroll(){
+			window.location.href="/user/indexsucess";
+		}
+		function authorenroll(){
+			window.location.href="/user/indexsucessauthor";
+		}
 		$('#button').click(function(){
-			var user_id=$('#name').val();
+			var user_id=$('#user_id').val();
 			var password=$('#password').val();
+
 			$.post('/user/login',{user_id:user_id,password:password},function(data){
-			alert(data.msg);
-				if(data.code==200){
-                    login();
-                }
+			alert(data.msg);//判断用户的id是普通
+			if(data.code==202){
+			authorenroll();
+			}
+			else if(data.code==200){
+			readerenroll();//读者
+			}
 			},'json')//登录用户
 			})
 			
-		$('#name').click(function(){
-			$('#name').val('');
+		$('#user_id').click(function(){
+			$('#user_id').val('');
 		})
 		$('#password').click(function(){
 			$('#password').val('');
-		})
-		$('#code').click(function(){
-			$('#code').val('');
 		})
 		$('#search').click(function(){
 			$('#search').val('');

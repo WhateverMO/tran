@@ -4,7 +4,7 @@ user_id_pool_size = 400
 user_id_pool_lock_size = 200
 author_id_pool_size = 400
 author_id_pool_lock_size = 200
-book_id_pool_size = 400
+b_id_pool_size = 400
 
 
 def add_user_id_pool(n, sql, is_lock=False):
@@ -53,7 +53,7 @@ def del_a_author_id_from_pool(sql):
     return ret
 
 
-def add_book_id_pool(n, sql):
+def add_b_id_pool(n, sql):
     ids = []
     for a in range(n):
         ids.append(bookidpool())
@@ -61,21 +61,21 @@ def add_book_id_pool(n, sql):
     sql.session.add_all(ids)
 
 
-def collect_book_id(book_id, sql):
-    sql.session.add(bookidpool(book_id=book_id))
+def collect_b_id(b_id, sql):
+    sql.session.add(bookidpool(b_id=b_id))
 
 
-def del_a_book_id_from_pool(sql):
-    res = sql.session.query(bookidpool.book_id).count()
-    if res < book_id_pool_size:
-        add_book_id_pool(book_id_pool_size - res, sql)
-    ret = sql.session.query(bookidpool.book_id).first()[0]
-    sql.session.query(bookidpool).filter(bookidpool.book_id == ret).delete()
+def del_a_b_id_from_pool(sql):
+    res = sql.session.query(bookidpool.b_id).count()
+    if res < b_id_pool_size:
+        add_b_id_pool(b_id_pool_size - res, sql)
+    ret = sql.session.query(bookidpool.b_id).first()[0]
+    sql.session.query(bookidpool).filter(bookidpool.b_id == ret).delete()
     return ret
 
 
 def add_user(user):
-    with UsingAlchemy() as sql:
+    with UsingAlchemy(log_label='添加用户') as sql:
         user_id = del_a_user_id_from_pool(sql)
         user.user_id = user_id
         user.activate_time = datetime.datetime.utcnow()
@@ -84,7 +84,7 @@ def add_user(user):
 
 
 def del_user(user_id):
-    with UsingAlchemy() as sql:
+    with UsingAlchemy(log_label='删除用户') as sql:
         ret = sql.session.query(users.is_author).filter(users.user_id == user_id).first()[0]
         if ret:
             print(user_id, "是一位作者，无法删除，要删除请将作者绑定到其他账户下，再删除这个用户账号")
@@ -95,7 +95,7 @@ def del_user(user_id):
 
 
 def select_user(user_id):
-    with UsingAlchemy() as sql:
+    with UsingAlchemy(log_label='获取用户信息') as sql:
         ret = sql.session.query(users).filter(users.user_id == user_id).first()
         sql.session.query(users).filter(users.user_id == user_id).update({"activate_time": datetime.datetime.utcnow()})
     return {'user_id': ret.user_id, 'is_author': ret.is_author, 'user_name': ret.user_name,
@@ -106,19 +106,19 @@ def select_user(user_id):
 
 
 def login_user(user_id, passwd):
-    with UsingAlchemy() as sql:
+    with UsingAlchemy(log_label='用户登录') as sql:
         ret = sql.session.query(users).filter(users.user_id == user_id).first()
         sql.session.query(users).filter(users.user_id == user_id).update({"activate_time": datetime.datetime.utcnow()})
     return passwd == ret.password
 
 
-def update_user(user_id, updata_dict):
-    with UsingAlchemy() as sql:
-        ret = sql.session.query(users).filter(users.user_id == user_id).update(updata_dict)
+def update_user(user_id, update_dict):
+    with UsingAlchemy(log_label='更新用户信息') as sql:
+        ret = sql.session.query(users).filter(users.user_id == user_id).update(update_dict)
 
 
 def add_author(author, user_id):
-    with UsingAlchemy() as sql:
+    with UsingAlchemy(log_label='添加作者') as sql:
         author_id = del_a_author_id_from_pool(sql)
         author.author_id = author_id
         author.user_id = user_id
@@ -128,21 +128,21 @@ def add_author(author, user_id):
 
 
 def select_author_by_user_id(user_id):
-    with UsingAlchemy() as sql:
+    with UsingAlchemy(log_label='通过用户id获取作者信息') as sql:
         ret = sql.session.query(authores).filter(authores.user_id == user_id).first()
     return {'author_id': ret.author_id, 'user_id': ret.user_id, 'author_name': ret.author_name,
             'author_describe': ret.author_describe}
 
 
 def select_author_by_author_id(author_id):
-    with UsingAlchemy() as sql:
+    with UsingAlchemy(log_label='通过作者id获取作者信息') as sql:
         ret = sql.session.query(authores).filter(authores.author_id == author_id).first()
     return {'author_id': ret.author_id, 'user_id': ret.user_id, 'author_name': ret.author_name,
             'author_describe': ret.author_describe}
 
 
 def del_author(author_id):
-    with UsingAlchemy() as sql:
+    with UsingAlchemy(log_label='删除作者') as sql:
         ret = sql.session.query(booklib.b_id).filter(booklib.author_id == author_id).count()
         if ret != 0:
             print("此作者在数据库中拥有书籍，不能删除")
@@ -154,338 +154,423 @@ def del_author(author_id):
     return 1
 
 
-def update_author(author_id, updata_dict):
-    with UsingAlchemy() as sql:
-        ret = sql.session.query(authores).filter(authores.author_id == author_id).update(updata_dict)
+def update_author(author_id, update_dict):
+    with UsingAlchemy(log_label='更新作者信息') as sql:
+        ret = sql.session.query(authores).filter(authores.author_id == author_id).update(update_dict)
 
 
 def add_book_class(book_class):
-    with UsingAlchemy() as sql:
+    with UsingAlchemy(log_label='添加书记种类编号') as sql:
         sql.session.add(book_class)
 
 
-def select_book(b_id):
-    with UsingAlchemy() as sql:
-        ret = sql.session.query(booklib).filter(booklib.b_id == b_id).first()
-        sql.session.query(booklib).filter(booklib.b_id == b_id).update({"activate_time": datetime.datetime.utcnow()})
-    return {'b-id': ret.b_id, 'author_id': ret.author_id, 'book_lang': ret.book_lang,
-            'bc_id': ret.bc_id, 'support_lang': ret.support_lang, 'cover_paht': ret.cover_path,
-            'create_time': ret.create_time
-            }
-
-
-def add_chinese_book_class(chinese_book_class):
-    with UsingAlchemy() as sql:
-        sql.session.add(chinese_book_class)
-
-
-def update_chinese_book_class(b_id, updata_dict):
-    with UsingAlchemy() as sql:
-        ret = sql.session.query(chinesebookclass).filter(chinesebookclass.b_id == b_id).update(updata_dict)
-
-
-def select_chinesebook_class(b_id):
-    with UsingAlchemy() as sql:
-        ret = sql.session.query(chinesebookclass).filter(chinesebookclass.b_id == b_id).first()
-        sql.session.query(chinesebookclass).filter(chinesebookclass.b_id == b_id).update(
-            {"activate_time": datetime.datetime.utcnow()})
-    return {'b_id': ret.b_id, 'name': ret.name, 'desc': ret.desc}
-
-
 def add_language(language):
-    with UsingAlchemy() as sql:
+    with UsingAlchemy(log_label='添加支持语言') as sql:
         sql.session.add(language)
 
 
-def update_language(lang_id, updata_dict):
-    with UsingAlchemy() as sql:
-        ret = sql.session.query(languages).filter(languages.lang_id == lang_id).update(updata_dict)
-
-
-def select_language(lang_id):
-    with UsingAlchemy() as sql:
-        ret = sql.session.query(languages).filter(languages.lang_id == lang_id).first()
-        sql.session.query(languages).filter(languages.lang_id == lang_id).update(
-            {"activate_time": datetime.datetime.utcnow()})
-    return {'lang_id': ret.lang_id}
-
-
-def add_chinese_language(chinese_language):
-    with UsingAlchemy() as sql:
-        sql.session.add(chinese_language)
-
-
-def update_chineselanguage(lang_id, updata_dict):
-    with UsingAlchemy() as sql:
-        ret = sql.session.query(chineselanguages).filter(chineselanguages.lang_id == lang_id).update(updata_dict)
-
-
-def select_chineselanguage(lang_id):
-    with UsingAlchemy() as sql:
-        ret = sql.session.query(chineselanguages).filter(chineselanguages.lang_id == lang_id).first()
-        sql.session.query(chineselanguages).filter(chineselanguages.lang_id == lang_id).update(
-            {"activate_time": datetime.datetime.utcnow()})
-    return {'lang_id': ret.lang_id, 'chineselang': ret.chineselang}
-
-
 def add_book(book):
-    with UsingAlchemy() as sql:
-        book_id = del_a_book_id_from_pool(sql)
-        book.b_id = book_id
-        book.support_lang = str(book.book_lang)
+    with UsingAlchemy(log_label='在根书籍库添加书籍') as sql:
+        if book.b_id == None:
+            b_id = del_a_b_id_from_pool(sql)
+            book.b_id = b_id
+        if book.support_lang == None:
+            book.support_lang = str(book.lang_id)
         sql.session.add(book)
-    return book_id
+    return b_id
 
 
-def update_book(b_id, author_id, book_lang, updata_dict):
-    with UsingAlchemy() as sql:
+def update_book(b_id, author_id, book_lang, update_dict):
+    with UsingAlchemy(log_label='在根书籍库更新书籍信息') as sql:
         ret = sql.session.query(booklib).filter(
-            and_(booklib.b_id == b_id, booklib.author_id == author_id, booklib.book_lang == book_lang)).update(
-            updata_dict)
+            and_(booklib.b_id == b_id, booklib.author_id == author_id, booklib.lang_id == book_lang)).update(
+            update_dict)
 
 
-def add_book_support_language(book_id, lang_id):
-    with UsingAlchemy() as sql:
-        ret = sql.session.query(booklib.support_lang).filter(booklib.b_id == book_id).first()[0]
+def add_book_support_language(b_id, author_id, book_lang, lang_id):
+    with UsingAlchemy(log_label='在根书籍库增加书籍支持的语言标记') as sql:
+        ret = sql.session.query(booklib.support_lang).filter(
+            and_(booklib.b_id == b_id, booklib.author_id == author_id, booklib.lang_id == book_lang)).first()[0]
         ret += str(lang_id)
-        sql.session.query(booklib).filter(booklib.b_id == book_id).update({"support_lang": ret})
+        sql.session.query(booklib).filter(
+            and_(booklib.b_id == b_id, booklib.author_id == author_id, booklib.lang_id == book_lang)).update(
+            {"support_lang": ret})
 
 
-def get_support_language(book_id):
-    with UsingAlchemy() as sql:
-        ret = sql.session.query(booklib.support_lang).filter(booklib.b_id == book_id).first()[0]
+def get_support_language(b_id, author_id, book_lang):
+    with UsingAlchemy(log_label='在根书籍库查询书籍支持的语言') as sql:
+        ret = sql.session.query(booklib.support_lang).filter(
+            and_(booklib.b_id == b_id, booklib.author_id == author_id, booklib.lang_id == book_lang)).first()[0]
         ret = [int(x) for x in list(ret)]
     return ret
 
 
-def select_book(b_id):
-    with UsingAlchemy() as sql:
-        ret = sql.session.query(booklib).filter(booklib.b_id == b_id).first()
-        sql.session.query(booklib).filter(booklib.b_id == b_id).update({"activate_time": datetime.datetime.utcnow()})
-    return {'b_id': ret.b_id, 'author_id': ret.author_id, 'book_lang': ret.book_lang,
+def select_book(b_id, author_id, book_lang):
+    with UsingAlchemy(log_label='在根书籍库获取书籍信息') as sql:
+        ret = sql.session.query(booklib).filter(
+            and_(booklib.b_id == b_id, booklib.author_id == author_id, booklib.lang_id == book_lang)).first()
+    return {'b_id': ret.b_id, 'author_id': ret.author_id, 'book_lang': ret.lang_id,
             'bc_id': ret.bc_id, 'support_lang': ret.support_lang, 'cover_path': ret.cover_path,
             'create_time': ret.create_time}
 
 
-def add_content(b_id):
-    with UsingAlchemy() as sql:
+def add_content(b_id, author_id, book_lang, c_no):
+    with UsingAlchemy(log_label='在根书籍目录库添加章节') as sql:
         content = bookcontent()
         content.b_id = b_id
-        sql.session.add(content)
-
-
-def update_content(b_id, content_no, updata_dict):
-    with UsingAlchemy() as sql:
-        ret = sql.session.query(bookcontent).filter(
-            and_(bookcontent.b_id == b_id, bookcontent.content_no == content_no)).update(updata_dict)
-
-
-def select_bookcontent(b_id, c_no):
-    with UsingAlchemy() as sql:
-        ret = sql.session.query(bookcontent).filter(
-            and_(bookcontent.b_id == b_id, bookcontent.content_no == c_no)).first()
-        sql.session.query(bookcontent).filter(and_(bookcontent.b_id == b_id, bookcontent.content_no == c_no)).update(
-            {"activate_time": datetime.datetime.utcnow()})
-    return {'b_id': ret.b_id, 'content_no': ret.content_no}
-
-
-def add_chinese_book(chinese_book, b_id):
-    with UsingAlchemy() as sql:
-        chinese_book.b_id = b_id
-        sql.session.add(chinese_book)
-
-
-def update_chinesebook(b_id, updata_dict):
-    with UsingAlchemy() as sql:
-        ret = sql.session.query(chinesebooklib).filter(chinesebooklib.b_id == b_id).update(updata_dict)
-
-
-def select_chinesebook(b_id):
-    with UsingAlchemy() as sql:
-        ret = sql.session.query(chinesebooklib).filter(chinesebooklib.b_id == b_id).first()
-        sql.session.query(chinesebooklib).filter(chinesebooklib.b_id == b_id).update(
-            {"activate_time": datetime.datetime.utcnow()})
-    return {'b_id': ret.b_id, 'name': ret.name, 'desc': ret.desc}
-
-
-def add_chinese_content(content, b_id, c_no):
-    with UsingAlchemy() as sql:
-        content.b_id = b_id
+        content.author_id = author_id
+        content.lang_id = book_lang
         content.c_no = c_no
         sql.session.add(content)
 
 
-def update_chinese_content(b_id, content_no, updata_dict):
-    with UsingAlchemy() as sql:
-        ret = sql.session.query(chinesecontent).filter(
-            and_(chinesecontent.b_id == b_id, chinesecontent.content_no == content_no)).update(updata_dict)
+def update_content(b_id, author_id, book_lang, c_no, update_dict):
+    with UsingAlchemy(log_label='在根书籍目录库更新章节') as sql:
+        ret = sql.session.query(bookcontent).filter(
+            and_(bookcontent.b_id == b_id, bookcontent.author_id == author_id, bookcontent.lang_id == book_lang,
+                 bookcontent.c_no == c_no)).update(update_dict)
 
 
-def select_chinesecontent(b_id, c_no):
-    with UsingAlchemy() as sql:
+def select_bookcontent(b_id, author_id, book_lang, c_no):
+    with UsingAlchemy(log_label='在根书籍目录库获取章节信息') as sql:
+        ret = sql.session.query(bookcontent).filter(
+            and_(bookcontent.b_id == b_id, bookcontent.author_id == author_id, bookcontent.lang_id == book_lang,
+                 bookcontent.c_no == c_no)).first()
+    return {'b_id': ret.b_id, 'author_id': ret.author_id, 'book_lang': ret.lang_id, 'c_no': ret.c_no}
+
+
+def add_chinese_book_class(chinese_book_class):
+    with UsingAlchemy(log_label='在中文映射种类库添加种类') as sql:
+        sql.session.add(chinese_book_class)
+
+
+def update_chinese_book_class(b_id, update_dict):
+    with UsingAlchemy(log_label='在中文映射种类库更新种类') as sql:
+        ret = sql.session.query(chinesebookclass).filter(chinesebookclass.b_id == b_id).update(update_dict)
+
+
+def select_chinesebook_class(b_id):
+    with UsingAlchemy(log_label='在中文映射种类库获取种类中文名') as sql:
+        ret = sql.session.query(chinesebookclass).filter(chinesebookclass.b_id == b_id).first()
+    return {'chinese_bookclass_name': ret.chinese_bookclass_name, 'bookclass_id': ret.bookclass_id}
+
+
+def add_chinese_language(chinese_language):
+    with UsingAlchemy(log_label='在中文映射支持语言库添加语言') as sql:
+        sql.session.add(chinese_language)
+
+
+def update_chineselanguage(lang_id, update_dict):
+    with UsingAlchemy(log_label='在中文映射支持语言库更新语言') as sql:
+        ret = sql.session.query(chineselanguages).filter(chineselanguages.lang_id == lang_id).update(update_dict)
+
+
+def select_chineselanguage(lang_id):
+    with UsingAlchemy(log_label='在中文映射支持语言库获取语言的中文') as sql:
+        ret = sql.session.query(chineselanguages).filter(chineselanguages.lang_id == lang_id).first()
+    return {'lang_id': ret.lang_id, 'chineselang': ret.chineselang}
+
+
+def add_chinese_book(chinese_book, b_id, author_id, book_lang):
+    with UsingAlchemy(log_label='在中文映射书籍库添加书籍') as sql:
+        chinese_book.b_id = b_id
+        chinese_book.author_id = author_id
+        chinese_book.lang_id = book_lang
+        sql.session.add(chinese_book)
+
+
+def update_chinesebook(b_id, author_id, book_lang, update_dict):
+    with UsingAlchemy(log_label='在中文映射书籍库更新书籍') as sql:
+        ret = sql.session.query(chinesebooklib).filter(
+            and_(chinesebooklib.b_id == b_id, chinesebooklib.author_id == author_id,
+                 chinesebooklib.lang_id == book_lang)).update(update_dict)
+
+
+def select_chinesebook(b_id, author_id, book_lang):
+    with UsingAlchemy(log_label='在中文映射书籍库获取书籍') as sql:
+        ret = sql.session.query(chinesebooklib).filter(
+            and_(chinesebooklib.b_id == b_id, chinesebooklib.author_id == author_id,
+                 chinesebooklib.lang_id == book_lang)).first()
+    return {'b_id': ret.b_id, 'author_id': ret.author_id, 'book_lang': ret.lang_id, 'name': ret.name, 'desc': ret.desc}
+
+
+def add_chinese_content(content, b_id, author_id, book_lang, c_no):
+    with UsingAlchemy(log_label='在中文映射书籍目录库添加章节') as sql:
+        content.b_id = b_id
+        content.author_id = author_id
+        content.lang_id = book_lang
+        content.c_no = c_no
+        sql.session.add(content)
+
+
+def update_chinese_content(b_id, author_id, book_lang, c_no, update_dict):
+    with UsingAlchemy(log_label='在中文映射书籍目录库更新章节') as sql:
         ret = sql.session.query(chinesecontent).filter(
-            and_(chinesecontent.b_id == b_id, chinesecontent.c_no == c_no)).first()
-        sql.session.query(chinesecontent).filter(and_(chinesecontent.b_id == b_id, chinesecontent.c_no == c_no)).update(
-            {"activate_time": datetime.datetime.utcnow()})
-    return {'b_id': ret.b_id, 'c_no': ret.c_no, 'title': ret.title, 'text_path': ret.text_path}
+            and_(chinesebooklib.b_id == b_id, chinesebooklib.author_id == author_id,
+                 chinesebooklib.lang_id == book_lang, chinesecontent.c_no == c_no)).update(update_dict)
+
+
+def select_chinesecontent(b_id, author_id, book_lang, c_no):
+    with UsingAlchemy(log_label='在中文映射书籍目录库获取章节') as sql:
+        ret = sql.session.query(chinesecontent).filter(
+            and_(chinesebooklib.b_id == b_id, chinesebooklib.author_id == author_id,
+                 chinesebooklib.lang_id == book_lang, chinesecontent.c_no == c_no)).first()
+    return {'b_id': ret.b_id, 'author_id': ret.author_id, 'book_lang': ret.lang_id, 'c_no': ret.c_no,
+            'title': ret.title, 'text_path': ret.text_path}
 
 
 def add_english_book_class(english_book_class):
-    with UsingAlchemy() as sql:
+    with UsingAlchemy(log_label='在英文映射种类库添加种类') as sql:
         sql.session.add(english_book_class)
 
 
-def update_englishbookclass(bookclass_id, updata_dict):
-    with UsingAlchemy() as sql:
+def update_englishbookclass(bookclass_id, update_dict):
+    with UsingAlchemy(log_label='在英文映射种类库更新种类') as sql:
         ret = sql.session.query(englishbookclass).filter(englishbookclass.bookclass_id == bookclass_id).update(
-            updata_dict)
+            update_dict)
 
 
 def select_englishbook_class(bookclass_id):
-    with UsingAlchemy() as sql:
+    with UsingAlchemy(log_label='在英文映射种类库获取种类的英文') as sql:
         ret = sql.session.query(englishbookclass).filter(englishbookclass.bookclass_id == bookclass_id).first()
-        sql.session.query(englishbookclass).filter(englishbookclass.bookclass_id == bookclass_id).update(
-            {"activate_time": datetime.datetime.utcnow()})
     return {'english_bookclass_name': ret.english_bookclass_name, 'bookclass_id': ret.bookclass_id}
 
 
 def add_english_language(english_language):
-    with UsingAlchemy() as sql:
+    with UsingAlchemy(log_label='在英文映射支持语言库添加语言') as sql:
         sql.session.add(english_language)
 
 
-def update_englishlanguages(lang_id, updata_dict):
-    with UsingAlchemy() as sql:
-        ret = sql.session.query(englishlanguages).filter(englishlanguages.lang_id == lang_id).update(updata_dict)
+def update_englishlanguages(lang_id, update_dict):
+    with UsingAlchemy(log_label='在英文映射支持语言库更新语言') as sql:
+        ret = sql.session.query(englishlanguages).filter(englishlanguages.lang_id == lang_id).update(update_dict)
 
 
 def select_englishlanguage(lang_id):
-    with UsingAlchemy() as sql:
+    with UsingAlchemy(log_label='在英文映射支持语言库获取语言') as sql:
         ret = sql.session.query(englishlanguages).filter(englishlanguages.lang_id == lang_id).first()
-        sql.session.query(englishlanguages).filter(englishlanguages.lang_id == lang_id).update(
-            {"activate_time": datetime.datetime.utcnow()})
     return {'lang_id': ret.lang_id, 'englishlang': ret.englishlang}
 
 
-def add_english_book(english_book, b_id):
-    with UsingAlchemy() as sql:
+def add_english_book(english_book, b_id, author_id, book_lang):
+    with UsingAlchemy(log_label='在英文映射书籍库添加书籍') as sql:
         english_book.b_id = b_id
+        english_book.author_id = author_id
+        english_book.lang_id = book_lang
         sql.session.add(english_book)
 
 
-def update_englishbook(b_id, updata_dict):
-    with UsingAlchemy() as sql:
-        ret = sql.session.query(englishbooklib).filter(englishbooklib.b_id == b_id).update(updata_dict)
+def update_englishbook(b_id, author_id, book_lang, update_dict):
+    with UsingAlchemy(log_label='在英文映射书籍库更新书籍') as sql:
+        ret = sql.session.query(englishbooklib).filter(
+            and_(englishbooklib.b_id == b_id, englishbooklib.author_id == author_id,
+                 englishbooklib.lang_id == book_lang)).update(update_dict)
 
 
-def select_englishbook(b_id):
-    with UsingAlchemy() as sql:
-        ret = sql.session.query(englishbooklib).filter(englishbooklib.b_id == b_id).first()
-        sql.session.query(englishbooklib).filter(englishbooklib.b_id == b_id).update(
-            {"activate_time": datetime.datetime.utcnow()})
-    return {'b_id': ret.b_id, 'name': ret.name, 'desc': ret.desc}
+def select_englishbook(b_id, author_id, book_lang):
+    with UsingAlchemy(log_label='在英文映射书籍库获取书籍') as sql:
+        ret = sql.session.query(englishbooklib).filter(
+            and_(englishbooklib.b_id == b_id, englishbooklib.author_id == author_id,
+                 englishbooklib.lang_id == book_lang)).first()
+    return {'b_id': ret.b_id, 'author_id': ret.author_id, 'book_lang': ret.lang_id, 'name': ret.name, 'desc': ret.desc}
 
 
-def add_english_content(content, b_id, c_no):
-    with UsingAlchemy() as sql:
+def add_english_content(content, author_id, book_lang, b_id, c_no):
+    with UsingAlchemy(log_label='在英文映射书籍目录库添加章节') as sql:
         content.b_id = b_id
+        content.author_id = author_id
+        content.lang_id = book_lang
         content.c_no = c_no
         sql.session.add(content)
 
 
-def update_english_content(b_id, content_no, updata_dict):
-    with UsingAlchemy() as sql:
+def update_english_content(b_id, author_id, book_lang, c_no, update_dict):
+    with UsingAlchemy(log_label='在英文映射书籍目录库更新章节') as sql:
         ret = sql.session.query(englishcontent).filter(
-            and_(englishcontent.b_id == b_id, englishcontent.content_no == content_no)).update(updata_dict)
+            and_(englishbooklib.b_id == b_id, englishbooklib.author_id == author_id,
+                 englishbooklib.lang_id == book_lang, englishcontent.c_no == c_no)).update(update_dict)
 
 
-def select_englishcontent(b_id, c_no):
-    with UsingAlchemy() as sql:
+def select_englishcontent(b_id, author_id, book_lang, c_no):
+    with UsingAlchemy(log_label='在英文映射书籍目录库获取章节') as sql:
         ret = sql.session.query(englishcontent).filter(
-            and_(englishcontent.b_id == b_id, englishcontent.c_no == c_no)).first()
-        sql.session.query(englishcontent).filter(and_(englishcontent.b_id == b_id, englishcontent.c_no == c_no)).update(
-            {"activate_time": datetime.datetime.utcnow()})
-    return {'b_id': ret.b_id, 'c_no': ret.c_no, 'title': ret.title, 'text_path': ret.text_path}
+            and_(englishbooklib.b_id == b_id, englishbooklib.author_id == author_id,
+                 englishbooklib.lang_id == book_lang, englishcontent.c_no == c_no)).first()
+    return {'b_id': ret.b_id, 'author_id': ret.author_id, 'book_lang': ret.lang_id, 'c_no': ret.c_no,
+            'title': ret.title, 'text_path': ret.text_path}
 
 
 def add_japanese_book_class(japanese_book_class):
-    with UsingAlchemy() as sql:
+    with UsingAlchemy(log_label='在日文映射种类库添加种类') as sql:
         sql.session.add(japanese_book_class)
 
 
-def update_japanesebookclass(bookclass_id, updata_dict):
-    with UsingAlchemy() as sql:
+def update_japanesebookclass(bookclass_id, update_dict):
+    with UsingAlchemy(log_label='在日文映射种类库更新种类') as sql:
         ret = sql.session.query(japanesebookclass).filter(
-            japanesebookclass.bookclass_id == bookclass_id).update(updata_dict)
+            japanesebookclass.bookclass_id == bookclass_id).update(update_dict)
 
 
 def select_japanesebook_class(bookclass_id):
-    with UsingAlchemy() as sql:
+    with UsingAlchemy(log_label='在日文映射种类库获取种类') as sql:
         ret = sql.session.query(japanesebookclass).filter(japanesebookclass.bookclass_id == bookclass_id).first()
-        sql.session.query(japanesebookclass).filter(japanesebookclass.bookclass_id == bookclass_id).update(
-            {"activate_time": datetime.datetime.utcnow()})
     return {'japanese_bookclass_name': ret.japanese_bookclass_name, 'bookclass_id': ret.bookclass_id}
 
 
 def add_japanese_language(japanese_language):
-    with UsingAlchemy() as sql:
+    with UsingAlchemy(log_label='在日文映射语言库添加语言') as sql:
         sql.session.add(japanese_language)
 
 
-def update_japaneselanguages(lang_id, updata_dict):
-    with UsingAlchemy() as sql:
-        ret = sql.session.query(japaneselanguages).filter(japaneselanguages.lang_id == lang_id).update(updata_dict)
+def update_japaneselanguages(lang_id, update_dict):
+    with UsingAlchemy(log_label='在日文映射语言库更新语言') as sql:
+        ret = sql.session.query(japaneselanguages).filter(japaneselanguages.lang_id == lang_id).update(update_dict)
 
 
 def select_japaneselanguage(lang_id):
-    with UsingAlchemy() as sql:
+    with UsingAlchemy(log_label='在日文映射语言库获取语言') as sql:
         ret = sql.session.query(japaneselanguages).filter(japaneselanguages.lang_id == lang_id).first()
-        sql.session.query(japaneselanguages).filter(japaneselanguages.lang_id == lang_id).update(
-            {"activate_time": datetime.datetime.utcnow()})
     return {'lang_id': ret.lang_id, 'japaneselang': ret.japaneselang}
 
 
-def add_japanese_book(japanese_book, b_id):
-    with UsingAlchemy() as sql:
+def add_japanese_book(japanese_book, b_id, author_id, book_lang):
+    with UsingAlchemy(log_label='在日文映射书籍库添加书籍') as sql:
         japanese_book.b_id = b_id
+        japanese_book.author_id = author_id
+        japanese_book.lang_id = book_lang
         sql.session.add(japanese_book)
 
 
-def update_japanesebook(b_id, updata_dict):
-    with UsingAlchemy() as sql:
-        ret = sql.session.query(japanesebooklib).filter(japanesebooklib.b_id == b_id).update(
-            updata_dict)
+def update_japanesebook(b_id, author_id, book_lang, update_dict):
+    with UsingAlchemy(log_label='在日文映射书籍库更新书籍') as sql:
+        ret = sql.session.query(japanesebooklib).filter(
+            and_(japanesebooklib.b_id == b_id, japanesebooklib.author_id == author_id,
+                 japanesebooklib.lang_id == book_lang)).update(
+            update_dict)
 
 
-def select_japanesebook(b_id):
-    with UsingAlchemy() as sql:
-        ret = sql.session.query(japanesebooklib).filter(japanesebooklib.b_id == b_id).first()
-        sql.session.query(japanesebooklib).filter(japanesebooklib.b_id == b_id).update(
-            {"activate_time": datetime.datetime.utcnow()})
-    return {'b_id': ret.b_id, 'name': ret.name, 'desc': ret.desc}
+def select_japanesebook(b_id, author_id, book_lang):
+    with UsingAlchemy(log_label='在日文映射书籍库获取书籍') as sql:
+        ret = sql.session.query(japanesebooklib).filter(
+            and_(japanesebooklib.b_id == b_id, japanesebooklib.author_id == author_id,
+                 japanesebooklib.lang_id == book_lang)).first()
+    return {'b_id': ret.b_id, 'author_id': ret.author_id, 'book_lang': ret.lang_id, 'name': ret.name, 'desc': ret.desc}
 
 
-def add_japanese_content(content, b_id, c_no):
-    with UsingAlchemy() as sql:
+def add_japanese_content(content, b_id, author_id, book_lang, c_no):
+    with UsingAlchemy(log_label='在日文映射书籍目录库添加章节') as sql:
         content.b_id = b_id
+        content.author_id = author_id
+        content.lang_id = book_lang
         content.c_no = c_no
         sql.session.add(content)
 
 
-def update_japanese_content(b_id, content_no, updata_dict):
-    with UsingAlchemy() as sql:
+def update_japanese_content(b_id, author_id, book_lang, c_no, update_dict):
+    with UsingAlchemy(log_label='在日文映射书籍目录库更新章节') as sql:
         ret = sql.session.query(japanesecontent).filter(
-            and_(japanesecontent.b_id == b_id, japanesecontent.content_no == content_no)).update(updata_dict)
+            and_(japanesebooklib.b_id == b_id, japanesebooklib.author_id == author_id,
+                 japanesebooklib.lang_id == book_lang, japanesecontent.c_no == c_no)).update(update_dict)
 
 
-def select_japanesecontent(b_id, content_no):
-    with UsingAlchemy() as sql:
+def select_japanesecontent(b_id, author_id, book_lang, c_no):
+    with UsingAlchemy(log_label='在日文映射书籍目录库获取章节') as sql:
         ret = sql.session.query(japanesecontent).filter(
-            and_(japanesecontent.b_id == b_id, japanesecontent.c_no == content_no)).first()
-        sql.session.query(japanesecontent).filter(
-            and_(japanesecontent.b_id == b_id, japanesecontent.c_no == content_no)).update(
-            {"activate_time": datetime.datetime.utcnow()})
-    return {'b_id': ret.b_id, 'c_no': ret.c_no, 'title': ret.title, 'text_path': ret.text_path}
+            and_(japanesecontent.b_id == b_id, japanesecontent.author_id == author_id,
+                 japanesecontent.lang_id == book_lang, japanesecontent.c_no == c_no)).first()
+    return {'b_id': ret.b_id, 'author_id': ret.author_id, 'book_lang': ret.lang_id, 'c_no': ret.c_no,
+            'title': ret.title, 'text_path': ret.text_path}
+
+
+def select_all_lang_id():
+    with UsingAlchemy(log_label='获取所有语言编号') as sql:
+        ret = sql.session.query(languages).all()
+        res = list()
+        for id in ret:
+            res.append(id.lang_id)
+    return res
+
+
+def select_all_chinese_lang_id():
+    with UsingAlchemy(log_label='获取所有语言编号和对应中文') as sql:
+        ret = sql.session.query(chineselanguages).all()
+        res = list()
+        for id in ret:
+            res.append({"lang_id": id.lang_id, "chineselang": id.chineselang})
+    return res
+
+
+def select_all_english_lang_id():
+    with UsingAlchemy(log_label='获取所有语言编号和对应英文') as sql:
+        ret = sql.session.query(englishlanguages).all()
+        res = list()
+        for id in ret:
+            res.append({"lang_id": id.lang_id, "englishlang": id.englishlang})
+    return res
+
+
+def select_all_japanese_lang_id():
+    with UsingAlchemy(log_label='获取所有语言编号和对应日文') as sql:
+        ret = sql.session.query(japaneselanguages).all()
+        res = list()
+        for id in ret:
+            res.append({"lang_id": id.lang_id, "japaneselang": id.japaneselang})
+    return res
+
+
+def select_this_author_s_all_book(author_id):
+    with UsingAlchemy(log_label='获取这位作者的所有书籍') as sql:
+        ret = sql.session.query(booklib).filter(booklib.author_id == author_id).all()
+        res = list()
+        for book in ret:
+            res.append({'b_id': book.b_id, 'author_id': book.author_id, 'book_lang': book.lang_id,
+                        'bc_id': book.bc_id, 'support_lang': book.support_lang, 'cover_path': book.cover_path,
+                        'create_time': book.create_time})
+    return res
+
+
+def search_chinesebook(book_name):
+    with UsingAlchemy(log_label='在中文映射书籍库模糊查询') as sql:
+        book_name = "%" + book_name + "%"
+        ret = sql.session.query(chinesebooklib).filter(chinesebooklib.name.like(book_name)).all()
+        res = list()
+        for book in ret:
+            res.append({'b_id': book.b_id, 'author_id': book.author_id, 'book_lang': book.lang_id,
+                        'name': book.name, 'desc': book.desc})
+    return res
+
+
+def search_englishbook(book_name):
+    with UsingAlchemy(log_label='在英文映射书籍库模糊查询') as sql:
+        book_name = "%" + book_name + "%"
+        ret = sql.session.query(englishbooklib).filter(englishbooklib.name.like(book_name)).all()
+        res = list()
+        for book in ret:
+            res.append({'b_id': book.b_id, 'author_id': book.author_id, 'book_lang': book.lang_id,
+                        'name': book.name, 'desc': book.desc})
+    return res
+
+
+def search_japanesebook(book_name):
+    with UsingAlchemy(log_label='在日文映射书籍库模糊查询') as sql:
+        book_name = "%" + book_name + "%"
+        ret = sql.session.query(japanesebooklib).filter(japanesebooklib.name.like(book_name)).all()
+        res = list()
+        for book in ret:
+            res.append({'b_id': book.b_id, 'author_id': book.author_id, 'book_lang': book.lang_id,
+                        'name': book.name, 'desc': book.desc})
+    return res
+
+
+select_content_lang = {
+    1: select_chinesecontent,
+    2: select_englishcontent,
+    3: select_japanesecontent
+}
+
+
+def select_content(b_id, author_id, book_lang, c_no):
+    return select_content_lang[book_lang](b_id, author_id, book_lang, c_no)
 
 
 if __name__ == '__main__':
@@ -494,6 +579,8 @@ if __name__ == '__main__':
     u_id = add_user(users(is_author=False, user_name="张三", user_describe="我是张三haha", password="123456"))
     u_id = add_user(users(is_author=False, user_name="张三", user_describe="我是张三haha", password="123456"))
     u_id = add_user(users(is_author=False, user_name="张三", user_describe="我是张三haha", password="123456"))
+
+    update_user(201, {'user_name': "李四"})
 
     print(del_user(204))
     a = select_user(201)
@@ -505,9 +592,15 @@ if __name__ == '__main__':
         print("not found")
     print(login_user(205, "123456"))
     print(login_user(205, "12345"))
-    add_author(authores(author_name="作者张三", author_describe="我成作者啦"), 203)
+
+    add_author(authores(author_name="作者张三", author_describe="我成作者啦"), 201)
     add_author(authores(author_name="作者张三", author_describe="我成作者啦"), 201)
     add_author(authores(author_name="作者张三", author_describe="我成作者啦"), 202)
+
+    temp_gai_author = dict()
+    temp_gai_author['author_describe'] = "我改了签名"
+
+    update_author(202, temp_gai_author)
 
     b = select_author_by_user_id(202)
     print(b)
@@ -530,19 +623,36 @@ if __name__ == '__main__':
     add_language(chineselanguages(lang_id=2, chineselang="英文"))
     add_language(chineselanguages(lang_id=3, chineselang="日文"))
 
-    add_book(booklib(author_id=201, book_lang=1, bc_id=1))
-    add_book(booklib(author_id=201, book_lang=1, bc_id=1))
-    add_book(booklib(author_id=201, book_lang=1, bc_id=1))
-    print(del_author(201))
-    add_book_support_language(2, 2)
-    print(get_support_language(2))
-    add_content(1)
-    add_content(1)
-    add_content(1)
-    add_content(1)
-    add_chinese_book(chinesebooklib(name="张三的奇妙冒险"), 1)
-    add_chinese_content(chinesecontent(title="1 一", text_path="文件路径"), 1, 1)
-    add_chinese_content(chinesecontent(title="2 二", text_path="文件路径"), 1, 2)
-    add_chinese_content(chinesecontent(title="3 三", text_path="文件路径"), 1, 3)
+    update_chineselanguage(1, {'chineselang': "简体中文"})
 
-# __all__ = ["user_id_pool_size","author_id_pool_size","book_id_pool_size","add_user","del_user","select_user",]
+    add_book(booklib(author_id=201, lang_id=1, bc_id=1))
+    add_book(booklib(author_id=201, lang_id=1, bc_id=1))
+    add_book(booklib(author_id=201, lang_id=1, bc_id=1))
+
+    update_book(1, 201, 1, {'bc_id': 2})
+    try:
+        del_author(201)
+    except:
+        print("del author fail")
+    add_book_support_language(2, 201, 1, 2)
+    print(get_support_language(2, 201, 1))
+    add_content(1, 201, 1, 1)
+    add_content(1, 201, 1, 2)
+    add_content(1, 201, 1, 3)
+    add_content(1, 201, 1, 4)
+    add_chinese_book(chinesebooklib(name="张三的奇妙冒险"), 1, 201, 1)
+    add_chinese_content(chinesecontent(title="1 一", text_path="文件路径"), 1, 201, 1, 1)
+    add_chinese_content(chinesecontent(title="2 二", text_path="文件路径"), 1, 201, 1, 2)
+    add_chinese_content(chinesecontent(title="3 三", text_path="文件路径"), 1, 201, 1, 3)
+    print(select_content(1, 201, 1, 1))
+    print(select_all_lang_id())
+    print(select_all_chinese_lang_id())
+    print(select_all_english_lang_id())
+    print(select_all_japanese_lang_id())
+    print(select_this_author_s_all_book(201))
+    print(search_chinesebook("三"))
+    print(search_englishbook("三"))
+    print(search_japanesebook("三"))
+    pass
+
+# __all__ = ["user_id_pool_size","author_id_pool_size","b_id_pool_size","add_user","del_user","select_user",]

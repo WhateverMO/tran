@@ -2,7 +2,7 @@ body{
 	background: linear-gradient(125deg,#2c3e50,#27ae60,#2980b9,#e74c3c,#8e44ad);
 	background-size: 500%;
 	animation: bjanimation 10s linear infinite;
-	height: 120vh;
+	height: 100vh;
 }
 @keyframes bjanimation{
 	
@@ -31,24 +31,23 @@ a:hover{
 	src: url('../font/宋刻本秀楷体.ttf');
 }
 .wel {
-		display: flex;
-		justify-content: center;
-		height: 20vh;
+	display: flex;	
+	justify-content: center;
 	}/* //子元素有浮动需要为父元素添加高度 */
 .one {
 	display: inline;
-	padding:20px;
-	font-family:white;
+	font-family:kai;
 	font-size: 20px;
 	position: relative;
 	float: left;
+	margin-left: 3vh;
 	}
 .twe{
 		display:none;
 		position: absolute;
 	}
 .twe li{
-
+		width: 20vh;
 	}
 .one:hover ul {
     display: block;
@@ -66,8 +65,12 @@ a:hover{
 	background-color: #CCCCCC;
 	cursor:pointer;
 }
+h3{
+	display: inline-block;
+}
 #b1{
-	height: 70vh;
+	height: 60vh;
+	margin-top: 10vh;
 }
 #intro  li{
 margin-bottom: 5vh;
@@ -89,14 +92,6 @@ margin-bottom: 5vh;
 	float: right;
 	margin-right: 70vh;
 }
-
-#b2{
-
-}
-#b3{
-	
-}
-
 #footer{
 	height: 20vh;
 	text-align: center;

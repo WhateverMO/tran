@@ -1,12 +1,11 @@
 import random
-from flask import request, jsonify, session, Blueprint, g, make_response, render_template, redirect
+from flask import request, jsonify, session, g, make_response, render_template, url_for
 from . import user
-from ..utils.tool import user_login_required, crossdomain
+from ..utils.tool import user_login_required
 import os
 from datetime import datetime
 from werkzeug.utils import secure_filename
 from Database import *
-from flask_cors import cross_origin
 
 
 @user.after_request
@@ -18,14 +17,14 @@ def func_res(resp):
     return res
 
 
-# 用户初始页面
-@user.route('/index', methods=['GET'])
-# @user_login_required
+# 游客首页
+@user.route('/index', methods=['GET', 'POST'])
 def index():
     if request.method == 'GET':
         return render_template("index.html")
 
 
+# 普通用户首页
 @user.route('/indexsucess', methods=['GET', 'POST'])
 @user_login_required
 def indexsucess():
@@ -33,15 +32,17 @@ def indexsucess():
         return render_template("indexsucess.html")
 
 
+# 译者用户首页
+@user.route('/indexsucessauthor', methods=['GET', 'POST'])
+@user_login_required
+def idexsucessauthor():
+    if request.method == 'GET':
+        return render_template('indexsucessauothor.html')
+
+
 # 用户注册界面
 @user.route('/register', methods=['POST', 'GET'])
 def register():
-    """
-    用户名
-    密码
-    确认密码
-    :return:
-    """
     if request.method == 'GET':
         return render_template("register.html")
     elif request.method == 'POST':
@@ -49,7 +50,6 @@ def register():
         username = data.get("username")
         password = data.get("password")
         password2 = data.get("password2")
-
         # 校验参数
         if not all([username, password, password2]):
             return jsonify(msg="参数不完整", code=4002)
@@ -59,7 +59,7 @@ def register():
 
         user_id = add_user(users(is_author=False, user_name=username, password=password))
         print(user_id)
-        avatar = "D:/python/translation_system/app/static/file/20220330171454_36.jpg"  # 这里是默认头像
+        avatar = url_for('static', filename='img/b2.jpg')  # 这里是默认头像
         # 保存登陆状态到session中
         session["username"] = username
         session["user_id"] = user_id
@@ -86,7 +86,11 @@ def login():
                 session["user_id"] = user_id
                 username = select_user(user_id).get("user_name")
                 session["username"] = username
-                return jsonify(msg='登陆成功', code=200, user_id=user_id)
+                is_author = select_user(user_id).get("is_author")
+                if not is_author:
+                    return jsonify(msg="登录成功", code=200)
+                else:
+                    return jsonify(msg='登录成功', code=202)
             else:
                 return jsonify(msg='账号或密码错误', code=4000)
 
@@ -94,18 +98,20 @@ def login():
 # 检查登录状态
 @user.route('/session', methods=['GET'])
 def check_session():
-    username = session.get("username")
-    avatar = session.get("avatar")
     user_id = session.get("user_id")
+    username = session.get("username")
+    user_gender = session.get("gender")
+    user_birthday = session.get("birthday")
+    user_area = session.get("area")
     user_describe = session.get("user_describe")
-    if username is not None:
-        '''
-        这里就可以进行数据库的一些查询操作，然后将用户信息返回给前端
-        例如 用户名 密码 id 等级 认证等
-        '''
-        return jsonify(user_id=user_id, username=username, avatar=avatar, user_describe=user_describe, code=200)
+    user_avatar = session.get("picture")
+    is_author = session.get("is_author")
+    if user_id is not None:
+        return jsonify(username=username, user_birthday=user_birthday, user_area=user_area,
+                       user_gender=user_gender, user_describe=user_describe, user_avatar=user_avatar,
+                       is_author=is_author, user_id=user_id, code=200)
     else:
-        return jsonify(msg='未登录', code=400)
+        return jsonify(msg='未登录', code=4000)
 
 
 # 退出登录
@@ -117,72 +123,98 @@ def logout():
         return jsonify(msg="成功退出登录", code=200)
 
 
+###########################################################################################
+
+
+# 查看用户个人信息界面
+@user.route('/readerinformation', methods=['GET'])
+@user_login_required
+def user_information():
+    if request.method == 'GET':
+        try:
+            user_id = g.user_id
+            data = select_user(user_id)
+        except Exception as e:
+            print(e)
+            return jsonify("查不到该用户或该用户未登录", code=4000)
+        username = data.get("user_name")
+        user_gender = data.get("gender")
+        user_birthday = data.get("birthday")
+        user_area = data.get("area")
+        user_describe = data.get("user_describe")
+        user_avatar = data.get("picture")
+        is_author = data.get("is_author")
+        return render_template('readerinformation.html',
+                               username=username, user_birthday=user_birthday, user_area=user_area,
+                               user_gender=user_gender, user_describe=user_describe, user_avatar=user_avatar,
+                               is_author=is_author, user_id=user_id)
+
+
 # 修改密码
-@user.route('/password', methods=['PUT'])
+@user.route('/sucesscheckpassword', methods=['POST', 'GET'])
 @user_login_required  # 验证用户登录装的饰器
 def change_password():
-    if request.method == 'PUT':
+    if request.method == 'POST':
         uid = g.user_id
         data = request.form
         password = data.get("password")
         new_password = data.get("new_password")
-
         # 校验参数完整
         if not all([new_password, password, uid]):
             return jsonify(msg="参数不完整", code=4000)
 
-        """这里开始查找这个id
-        如果查不到则返回jsonify(msg="获取用户信息失败", code=4000)"""
-
+        try:
+            data_user = select_user(uid)
+        except Exception as e:
+            print(e)
+            return jsonify(msg="获取用户信息失败", code=4000)
         # 用数据库里的密码与用户输入的密码进行对比验证
-        if user is None or user.password != password:
+        if password != data_user.get("password"):
             return jsonify(msg="原始密码错误", code=4000)
 
         # 修改密码
-        user.password = new_password
-
-        """这里将新密码存进数据库里"""
-
-        return jsonify(msg="修改密码成功", code=200)
-
-
-# 查询用户信息
-@user.route('/profile/<int:user_id>', methods=["GET"])
-def get_profile(user_id):
+        update_user(uid, {"password": new_password})
+        is_author = session.get("is_author")
+        if not is_author:
+            return jsonify(msg='修改密码成功', code=200)
+        else:
+            return jsonify(msg="修改密码成功", code=202)
     if request.method == 'GET':
-        if not user_id:
-            return jsonify(msg='参数不完整', code=4000)
-        """这里通过用户的id查询用户的参数"""
-        try:
-            data = {select_user(user_id)}  # data保存查询的用户信息
-        except Exception as e:
-            print(e)
-            return jsonify(msg='查询寻不到用户', code=4001)
-        return jsonify(msg="查询用户信息成功", data=data, code=200)
+        return render_template("sucesscheckpassword.html")
 
 
-# 用户个人信息界面
-@user.route('/user_information', methods=['GET'])
-def user_information():
-    if request.method == 'GET':
-        return render_template('userinformation.html')
-
-
-# 用户修改信息
+# 用户修改基本信息  111
 @user.route('/userinformation/modification', methods=['POST', 'GET'])
 @user_login_required  # 验证用户登录的装饰器
-def updata_user_information():
+def update_user_information():
     if request.method == 'GET':
         return render_template('checkinformation.html')
     if request.method == 'POST':
         # 从管道获取user的id
-        # user_id = g.user_id
+        user_id = g.user_id
         # 获取用户修改的信息
         data = request.form
-        username = data.get('username')
-        user_id = data.get('user_id')
-        user_describe = data.get('user_describe')
+        username = data.get("user_name")
+        user_gender = data.get("gender")
+        user_area = data.get("area")
+        user_describe = data.get("user_describe")
+        # 保存成功并返回
+        session["username"] = username
+        session["user_describe"] = user_describe
+        session["user_gender"] = user_gender
+        session["user_area"] = user_area
+        return jsonify(mag="保存成功", username=username, user_id=user_id, user_gender=user_gender, user_area=user_area,
+                       user_describe=user_describe, code=200)
 
+
+# 用户修改头像  需要有一个单独的提交头像文件的页面 没写
+@user.route('/userinformation/modification/update_avatar', methods=['POST', 'GET'])
+@user_login_required
+def update_user_avatar():
+    if request.method == 'GET':
+        return render_template("checkinformation.html")
+    if request.method == 'POST':
+        user_id = g.user_id
         # 获取用户上传的头像图片文件
         image_file = request.files.get("file")
         # 获取安全的文件名
@@ -193,124 +225,352 @@ def updata_user_information():
         # filename.rsplit('.', 1)[1] 获取文件名的后缀
         filename = datetime.now().strftime("%Y%m%d%H%M%S") + "_" + str(random.randint(0, 100)) + "." + \
                    filename.rsplit('.', 1)[1]
-        file_path = basedir + "/app/static/file/" + filename
+        file_path = basedir + "/app/static/avatar_file/" + filename
         if image_file is None:
             return jsonify(msg="未上传图片", code=4000)
         try:
             image_file.save(file_path)
             my_host = "http://127.0.0.1:5000"
-            avatar_url = my_host + "/static/file/" + filename
+            avatar_url = my_host + "/static/avatar_file/" + filename
         except Exception as e:
             print(e)
             return jsonify(msg="上传图片失败", code=4001)
-
-        """随后通过数据库对头像进行修改"""
-
-        # 保存成功并返回
-        session["avatar"] = avatar_url
-        session["user_id"] = user_id
-        session["username"] = username
-        session["user_describe"] = user_describe
-        return jsonify(mag="保存成功", data={"avatar": avatar_url}, code=200)
+        session["user_avatar"] = avatar_url
+        update_user(user_id, {"picture": avatar_url})
+        return jsonify(msg="修改头像成功", user_avatar=avatar_url, code=200)
 
 
-# 用户修改密码
-@user.route('/checkpassword')
-def checkpassword():
-    return render_template("checkpassword.html")
-
+###################################################################################################
 # 搜索
-@user.route('/book/search/<int:page>', methods=['POST'])
-def book_search(page):
+@user.route('/book/search', methods=['POST'])
+def book_search(lang_id):
     if request.method == 'POST':
         keyword = request.form.get("keyword")
-        if not page:
-            page = 1
-        else:
-            page = int(page)
         if keyword is None:
             return jsonify(msg='请输入搜索内容', code=4000)
-
-        """这里根据keyword对数据库进行搜索查询"""
-
-        books = None  # 数据库中搜寻到的书籍相关内容保存到books里
+        books = search_chinesebook(keyword)  # 数据库中搜寻到的书籍相关内容保存到books里
         payload = [book.to_dict() for book in books]
         return jsonify(msg='搜索结束', data=payload, code=200)
 
 
 # 书籍简介
-@user.route('/read_book/introduce/<int:book_id>', methods=['GET', 'POST'])
+@user.route('/read_book/introduce', methods=['GET', 'POST'])
 def read_book_index():
     if request.method == 'GET':
+        # if lang_id == 1:
+        #     book_name = select_chinesebook(book_id, author_id, lang_id).get('name')
+        #     book_describe = select_chinesebook(book_id, author_id, lang_id).get('desc')
+        #     cover_path = select_book(book_id, author_id, lang_id).get("cover_name")
+        # elif lang_id == 2:
+        #     book_name = select_englishbook(book_id, author_id, lang_id).get('name')
+        #     book_describe = select_englishbook(book_id, author_id, lang_id).get('desc')
+        #     cover_path = select_book(book_id, author_id, lang_id).get("cover_name")
+        # elif lang_id == 3:
+        #     book_name = select_japanesebook(book_id, author_id, lang_id).get('name')
+        #     book_describe = select_japanesebook(book_id, author_id, lang_id).get('desc')
+        #     cover_path = select_book(book_id, author_id, lang_id).get("cover_name")
+        # author_name = select_author_by_author_id(author_id).get("author_name")
         return render_template("bookintroduce.html")
-    elif request.method == 'POST':
-        data = request.form
-        book_id = data.get("book_id")
-
-        """这里返回书籍的所有信息"""
-
-        return jsonify(msg="这是书籍的所有信息", code=200)
 
 
-# # 开始阅读
-# @user.route('/read_book/start_read')
-# def start_read():
-#     """查询书籍的内容"""
-#     book = bookLib()
-#     data = request.get_json()
-#     book_id = data.get("book_id")
-#     """这里返回书籍的内容与章节"""
-#     return jsonify(book.lib[book_id].bInfo, code=200)
+# 开始阅读
+@user.route('/read_book/start_read', methods=['GET'])
+def start_read():
+    if request.method == 'GET':
+        # title = select_content(book_id, author_id, lang_id, content).get('title')
+        # text_path = select_content(book_id, author_id, lang_id, content).get('text_path')
+        # content_file = open(text_path, 'r', encoding='utf-8')
+        # content_file_text = content_file.read()
+        # content_file.close()
+        return render_template("bookreading.html")
 
-# 译者翻译界面
-@user.route('/author/translate', methods=['GET'])
-def translate_book():
-    data = request.get_json()
-    book_id = data.get("book_id")
-    author_id = data.get("author_id")
 
-    """查询书籍章节内容"""
-
-    return jsonify(code=200)
-
+###############################################################################################
 
 # 判断该用户是否为译者
 @user.route('/judge_author', methods=['GET'])
 @user_login_required  # 验证用户登录的装饰器
 def judge_author():
-    user_id = g.user_id
-    data = request.get_json()
-    user_id = data.get("user_id")
-    user_name = data.get("user_name")
-    # user = user(user_id=user_id, user_name=user_name)
-
-    """通过数据库查询该用户的is_author"""
-
-    is_author = True
+    is_author = session.get("is_author")
     if not is_author:
         return jsonify(msg="该用户还不是译者", code=4000)
     return jsonify(msg="该用户是译者", code=200)
 
 
 # 用户注册译者界面
-@user.route('/author_register', methods=['POST'])
+@user.route('/author_register', methods=['POST', 'GET'])
 @user_login_required
 def author_register():
-    data = request.get_json()
-    author_name = data.get("author_name")
-    user_id = data.get("user_id")
-    # author = authores(user_id=user_id, author_name=author_name)
-    # add_author(author, user_id)
-    return jsonify(msg="恭喜你成为译者", code=200)
+    if request.method == 'POST':
+        data = request.form
+        author_name = data.get("author_name")
+        user_id = g.user_id
+        try:
+            author = authores(author_name=author_name, user_id=user_id)
+            author_id = add_author(author, user_id)
+        except Exception as e:
+            print(e)
+            return jsonify(msg="注册译者失败", code=4000)
+        update_user(user_id, {"is_author": True})
+        session['is_author'] = True
+        return jsonify(msg="恭喜你成为译者", author_id=author_id, code=200)
+    elif request.method == 'GET':
+        return render_template("registeraouthor.html")
 
 
-@user.route('/addbooks')
-def addbooks():
-    return render_template("addbooks.html")
-# @user.route('/author/translate', methods=['GET'])
+# 查看译者信息
+@user.route('/authorinfo', methods=['POST', 'GET'])
+@user_login_required
+def readerinformation():
+    if request.method == 'GET':
+        try:
+            user_id = g.user_id
+            data = select_author_by_user_id(user_id)
+        except Exception as e:
+            print(e)
+            return jsonify("查不到该用户或该用户未登录", code=4000)
+        author_id = data.get('author_id')
+        author_name = data.get('author_name')
+        author_describe = data.get('author_describe')
+
+        return render_template('authorinfo.html', author_name=author_name, author_id=author_id, author_describe=author_describe,)
+
+
+# 文本文件读写时记得要设置utf-8格式
+
+# 作者添加书籍选项页面
+@user.route('/author/add_books_index', methods=['POST', 'GET'])
+@user_login_required
+def author_add_books_index():
+    if request.method == 'GET':
+        user_id = g.user_id
+        author_id = select_author_by_user_id(user_id).get('author_id')
+        return render_template("addbooks.html", author_id=author_id)
+    elif request.method == 'POST':
+        # user_id = g.user_id
+        # author_id = select_author_by_user_id(user_id).get('author_id')
+        # data = request.form
+        # book_name = data.get("book_name")
+        # book_lang = int(data.get("book_lang"))
+        # book_class_id = int(data.get("book_class_id"))
+        # book_describe = data.get("book_describe")
+        #
+        # try:
+        #     book_id = add_book(booklib(author_id=author_id, book_lang=book_lang, bc_id=book_class_id))
+        #     if book_lang == 1:
+        #         add_chinese_book(
+        #             chinesebooklib(b_id=book_id, author_id=author_id, book_lang=book_lang, name=book_name,
+        #                            desc=book_describe), book_id,
+        #             author_id, book_lang)
+        #     elif book_lang == 2:
+        #         add_english_book(
+        #             englishbooklib(b_id=book_id, author_id=author_id, book_lang=book_lang, name=book_name,
+        #                            desc=book_describe), book_id,
+        #             author_id, book_lang)
+        #     elif book_lang == 3:
+        #         add_japanese_book(
+        #             japanesebooklib(b_id=book_id, author_id=author_id, book_lang=book_lang, name=book_name,
+        #                             desc=book_describe), book_id,
+        #             author_id, book_lang)
+        # except Exception as e:
+        #     print(e)
+        #     return jsonify(msg="建立新书失败请重试", code=4000)
+        return jsonify(msg="建立新书成功", code=200)
+
+
+# # 作者上传书籍封面
+# @user.route('/author/add_cover/<int:book_id>/<int:lang_id>', methods=['GET', 'POST'])
 # @user_login_required
-# def translate_book():
-#     data = request.get_data()
-#     user_id = g.user_id
-#
-#     basedir = os.path.abspath(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+# def add_cover(book_id, lang_id):
+#     if request.method == 'GET':
+#         return render_template("")
+#     elif request.method == 'POST':
+#         author_id = select_author_by_user_id(g.user_id).get('author_id')
+#         cover_file = request.files.get("cover_file")
+#         filename = secure_filename(cover_file.filename)
+#         basedir = os.path.abspath(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+#         # 获取该lang的英文名
+#         for i in select_all_english_lang_id():
+#             if i["lang_id"] == lang_id:
+#                 book_lang = i["englishlang"]
+#         book_dir_name = str(book_id) + '_' + str(author_id)
+#         book_lang_dir_name = str(book_lang)
+#         # 如果没有原始语言目录就创建
+#         if not os.path.exists(basedir + "/app/static/book_file/" + book_lang_dir_name):
+#             os.mkdir(basedir + "/app/static/book_file/" + book_lang_dir_name)
+#             # 如果没有对应的书籍目录就创建
+#         if not os.path.exists(basedir + "/app/static/book_file/" + book_lang_dir_name + '/' + book_dir_name):
+#             os.mkdir(basedir + "/app/static/book_file/" + book_lang_dir_name + '/' + book_dir_name)
+#         cover_file_path = basedir + "/app/static/book_file/" + book_lang_dir_name + '/' + book_dir_name + "/" + filename
+#         cover_file_url = url_for('static',
+#                                  filename='book_file/' + book_lang_dir_name + '/' + book_dir_name + '/' + filename)
+#         update_book(book_id, author_id, book_lang, {"cover_path": cover_file_path})
+#         if cover_file is None:
+#             return jsonify(msg="未上传图片", code=4000)
+#         try:
+#             cover_file.save(cover_file_path)
+#             my_host = "http://127.0.0.1:5000"
+#             cover_url = my_host + "/app/static/book_file/" + book_lang_dir_name + '/' + book_dir_name + "/" + filename
+#         except Exception as e:
+#             print(e)
+#             return jsonify(msg="上传图片失败", code=4001)
+#         return jsonify(msg='上传图片成功', cover_url=cover_url, code=200)
+
+
+# 作者添加书籍(只能是原始语言) (还需修改)!!!
+@user.route('/author/addbooks', methods=['GET', 'POST'])
+@user_login_required
+def add_books():
+    if request.method == 'GET':
+        return render_template("addbookcontent.html")
+    elif request.method == 'POST':
+        # data = request.form
+        # content_title = data.get("title")
+        # text = data.get("text")
+        # # 获取该lang的英文名
+        # for i in select_all_english_lang_id():
+        #     if i["lang_id"] == lang_id:
+        #         book_lang = i["englishlang"]
+        #
+        # author_id = select_author_by_user_id(g.user_id).get("author_id")
+        # book_lang_dir_name = str(book_lang)
+        # book_dir_name = str(book_id) + '_' + str(author_id)
+        #
+        # # 获取上上级路径
+        # basedir = os.path.abspath(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+        # # 如果没有原始语言目录就创建
+        # if not os.path.exists(basedir + "/app/static/book_file/" + book_lang_dir_name):
+        #     os.mkdir(basedir + "/app/static/book_file/" + book_lang_dir_name)
+        # # 如果没有对应的书籍目录就创建
+        # if not os.path.exists(basedir + "/app/static/book_file/" + book_lang_dir_name + '/' + book_dir_name):
+        #     os.mkdir(basedir + "/app/static/book_file/" + book_lang_dir_name + '/' + book_dir_name)
+        #
+        # # 章节内容文件名
+        # content_filename = str(content) + '_' + str(content_title)
+        #
+        # content_file = open(
+        #     basedir + "/app/static/book_file/" + book_lang_dir_name + '/' + book_dir_name + "/" + content_filename + '.txt',
+        #     'w', encoding='utf-8')
+        # content_file.write(text)
+        # content_file.close()
+        #
+        # # 绝对路径
+        # book_file_path = basedir + "/app/static/book_file/" + book_lang_dir_name + '/' + book_dir_name
+        # content_file_path = basedir + "/app/static/book_file/" + book_lang_dir_name + '/' + book_dir_name + "/" + content_filename
+        # # 相对路径
+        # book_file_url = url_for('static', filename='book_file/' + book_lang_dir_name + '/' + book_dir_name)
+        # content_file_url = url_for('static',
+        #                            filename='book_file/' + book_lang_dir_name + '/' + book_dir_name + '/' + content_filename)
+        #
+        # print(book_id, author_id, lang_id)
+        # add_content(book_id, author_id, lang_id)
+        # if book_lang == 1:
+        #     add_chinese_content(chinesecontent(b_id=book_id, author_id=author_id, book_lang=book_lang, c_no=content),
+        #                         book_id, author_id, book_lang, content)
+        # elif book_lang == 2:
+        #     add_english_content(englishcontent(b_id=book_id, author_id=author_id, book_lang=book_lang, c_no=content),
+        #                         book_id, author_id, book_lang, content)
+        # elif book_lang == 3:
+        #     add_japanese_content(japanesecontent(b_id=book_id, author_id=author_id, book_lang=book_lang, c_no=content),
+        #                          book_id, author_id, book_lang, content)
+
+        return jsonify(msg="提交成功", code=200)
+
+
+# 译者翻译首页界面
+@user.route('/author/translate_index', methods=['GET', 'POST'])
+@user_login_required
+def translate_index():
+    if request.method == 'GET':
+        return render_template("translateindex.html", )
+
+
+# 译者翻译选项界面
+@user.route('/author/translate_option', methods=['GET', 'POST'])
+@user_login_required
+def translate_option():
+    if request.method == 'GET':
+        return render_template("translateoption.html")
+    elif request.method == 'POST':
+        # user_id = g.user_id
+        # data = request.form
+        # book_name = data.get("name")
+        # # 选择要翻译的语言版本
+        # new_lang_id = int(data.get("new_lang_id"))
+        # author_id = select_author_by_user_id(user_id).get('author_id')
+        # if new_lang_id == lang_id:
+        #     return jsonify(msg="您选择的语言版本与原始版本相同，请重新选择", code=4000)
+        # else:
+        #     add_book_support_language(book_id, author_id, lang_id, new_lang_id)
+        #     origin_book = select_book(book_id, author_id, lang_id)
+        #     add_book(
+        #         booklib(b_id=book_id, author_id=author_id, book_lang=new_lang_id, bc_id=origin_book.get("bc_id"),
+        #                 support_lang=origin_book.get("support_lang")))
+        # if new_lang_id == 1:
+        #     add_chinese_book(
+        #         chinesebooklib(b_id=book_id, author_id=author_id, book_lang=lang_id, name=book_name
+        #                        ), book_id,
+        #         author_id, lang_id)
+        # elif new_lang_id == 2:
+        #     add_english_book(
+        #         englishbooklib(b_id=book_id, author_id=author_id, book_lang=lang_id, name=book_name
+        #                        ), book_id,
+        #         author_id, lang_id)
+        # elif new_lang_id == 3:
+        #     add_japanese_book(
+        #         japanesebooklib(b_id=book_id, author_id=author_id, book_lang=lang_id, name=book_name
+        #                         ), book_id,
+        #         author_id, lang_id)
+        return jsonify(msg="可以开始翻译", code=200)
+
+
+# 译者翻译界面
+@user.route('/author/translate', methods=['GET', 'POST'])
+@user_login_required
+def translate_book():
+    # 显示原文
+    if request.method == 'GET':
+        return render_template('translate.html')
+    # 提交译文
+    elif request.method == 'POST':
+        # author_id = select_author_by_user_id(g.user_id).get("author_id")
+        # data = request.form
+        # content_text = data.get("text")
+        # title = data.get('title')
+        # # 获取该lang的英文名
+        # for i in select_all_english_lang_id():
+        #     if i["lang_id"] == translate_lang_id:
+        #         book_lang = i["englishlang"]
+        # book_dir_name = str(book_id) + '_' + str(author_id)
+        # book_lang_dir_name = str(book_lang)
+        # # 获取上上级路径
+        # basedir = os.path.abspath(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+        #
+        # # 如果没有原始语言目录就创建
+        # if not os.path.exists(basedir + "/app/static/book_file/" + book_lang_dir_name):
+        #     os.mkdir(basedir + "/app/static/book_file/" + book_lang_dir_name)
+        # # 如果没有对应的书籍目录就创建
+        # if not os.path.exists(basedir + "/app/static/book_file/" + book_lang_dir_name + '/' + book_dir_name):
+        #     os.mkdir(basedir + "/app/static/book_file/" + book_lang_dir_name + '/' + book_dir_name)
+        #
+        # # 章节内容文件名
+        # content_filename = str(content) + '_' + str(title)
+        #
+        # content_file_path = basedir + "/app/static/book_file/" + book_lang_dir_name + '/' + book_dir_name + "/" + content_filename + '.txt'
+        # # 将译文写进文本文件里
+        # content_file = open(content_file_path, 'w', encoding='utf-8')
+        # content_file.write(content_text)
+        # content_file.close()
+        # if translate_lang_id == 1:
+        #     add_chinese_content(
+        #         chinesecontent(b_id=book_id, author_id=author_id, book_lang=translate_lang_id, c_no=content,
+        #                        title=title, text_path=content_file_path), book_id, author_id, lang_id, content)
+        # elif translate_lang_id == 2:
+        #     add_english_content(
+        #         englishcontent(b_id=book_id, author_id=author_id, book_lang=translate_lang_id, c_no=content,
+        #                        title=title, text_path=content_file_path), book_id, author_id, lang_id, content)
+        # elif translate_lang_id == 3:
+        #     add_japanese_content(
+        #         japanesecontent(b_id=book_id, author_id=author_id, book_lang=translate_lang_id, c_no=content,
+        #                         title=title, text_path=content_file_path), book_id, author_id, lang_id, content)
+        return jsonify(msg="译文提交成功", code=200)

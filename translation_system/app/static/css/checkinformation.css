@@ -3,10 +3,6 @@
 	src: url('../font/世界那么大.ttf');
 }
 @font-face {
-	font-family:white;
-	src: url('../font/包图小白体.ttf');
-}
-@font-face {
 	font-family:kai;
 	src: url('../font/宋刻本秀楷体.ttf');
 }
@@ -36,7 +32,7 @@ a{
 .one {
 	display: inline;
 	padding:20px;
-	font-family:white;
+	font-family:kai;
 	font-size: 20px;
 	position: relative;
 	float: left;
@@ -47,13 +43,12 @@ a{
 	}
 .twe li{
 		width: 40px;
-		border-bottom: 1px solid #667163;
 	}
 .one:hover ul {
     display: block;
 }
-/* 第二部分 */
-/* body{
+/*第二部分 */
+ body{
 	background: linear-gradient(125deg,#2c3e50,#27ae60,#2980b9,#e74c3c,#8e44ad);
 	background-size: 500%;
 	animation: bjanimation 10s linear infinite;
@@ -69,7 +64,7 @@ a{
 100%{
 	background-position: 0% 50%;
 }
-} */
+}
 #check {
 	margin-left: 400px;
     opacity: 0.8;

@@ -1,0 +1,109 @@
+body{
+	background: linear-gradient(125deg,#2c3e50,#27ae60,#2980b9,#e74c3c,#8e44ad);
+	background-size: 500%;
+	animation: bjanimation 10s linear infinite;
+	font-size: kai;
+	height: 100vh;
+}
+@keyframes bjanimation{
+	
+0%{
+	background-position: 0% 50%;
+}
+50%{
+	background-position: 100% 50%;
+}
+100%{
+	background-position: 0% 50%;
+}
+}
+ul li{
+	list-style: none;
+}
+a{
+	text-decoration: none;
+	color: #000000;
+}
+a:hover{
+	color: #DB1C29;
+}
+.reconmend img:hover{
+		transform: scale(1.2,1.2);
+}
+@font-face {
+	font-family:kai;
+	src: url('../font/宋刻本秀楷体.ttf');
+}
+*{
+	padding: 0;
+	margin: 0;
+}
+#n {
+	font-family:kai;
+	font-size: 20px;
+	display: inline-block;
+	margin-left: 80px;
+	margin-bottom: 2vh;
+	margin-top: 2vh;
+	}	
+	#welu{
+		margin-left: 30vh;
+	}
+.langguge {
+	display: none;
+	position: absolute;
+}
+
+.lang:hover ul{
+	display: block;
+}
+.lang{
+	position: relative;
+}
+input{
+	width: 40vh;
+	height: 5vh;
+	border-radius: 5px;
+	opacity: 0.7;
+	margin-left: 80vh;
+	margin-top: 5vh;
+}
+button{
+	border-radius: 5px;
+	width: 20vh;
+	height: 5vh;
+	cursor:pointer;
+}
+
+/* 第二部分 */
+#kind ul{
+	display: inline-block;
+	margin-left: 20vh;
+	
+}
+#kind ul li{
+margin-bottom: 10vh;
+	
+}
+#kind{
+	margin-right: 20vh;
+	margin-left: 20vh;
+	margin-top: 10vh;
+}
+#book{
+	margin-left: 30vh;	
+	margin-right: 10vh;	
+}
+#book li{
+	margin-left: 10vh;
+	margin-bottom: 10vh;
+display: inline-block;
+}
+/* 第六部分 */
+#footer li{
+	font-size: small;
+}
+#footer{
+text-align: center;
+
+}

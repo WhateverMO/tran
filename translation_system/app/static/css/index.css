@@ -14,6 +14,26 @@ input:focus{
 .reconmend img:hover{
 		transform: scale(1.2,1.2);
 }
+body{
+	background: linear-gradient(125deg,#72b576,#97f17b,#79b974,#8ce79f,#86f890);
+	background-size: 500%;
+	animation: bjanimation 10s linear infinite;
+	font-size: kai;
+	height: 150vh;
+}
+@keyframes bjanimation{
+	
+0%{
+	background-position: 0% 50%;
+}
+50%{
+	background-position: 100% 50%;
+}
+100%{
+	background-position: 0% 50%;
+}
+}
+
 @font-face {
 	font-family:big;
 	src: url('../font/世界那么大.ttf');
@@ -33,76 +53,63 @@ input:focus{
   font-style: normal;
   font-display: block;
 }
-/* 第一部分 */
-/* body{
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-position: center;
-	background-attachment: fixed;
-	background-image: url(../img/b4.jpg);
-	height: 1000px;
-	width: 100%;
-} */
+
 /* 第二部分 */
 *{
 	padding: 0;
 	margin: 0;
 }
-.wel{
-display:flex;
-height:10%;
-width: 100%;
-/* 	position: fixed; */
+#cen{
+	border-bottom: 1px solid;
+	margin-left: 40px;
+	margin-right: 40px;
+	margin-bottom: 10px;
 }
-.wel ul  li {
-	font-family:kai;
-	font-size: 20px;
-	display: inline-flex;
+.langguge {
+	display: none;
+	position: absolute;
 
-	}
-	.wel ul{
-	height: 50px;
-	width: 100%;
-	margin-top: 2%;
-	display: flex;
-	}
-	#welcom{
-		margin-left: 10vh;
-	}
-	#name{
-		margin-left: 10vh;
-	}
-#a{
-	margin-right: 100vh;
 }
-#a a{
-	margin-left: 10vh;
+.lang:hover ul{
+	display: block;
 }
+.lang{
+	position: relative;
+}
+.wel ul li{
+display: inline-block;
+}
+#one{
+	margin-left: 30vh;
+	margin-bottom: 2vh;
+	margin-top: 2vh;
+	
+}
+
 /* 第三部分 */
 .nav{
 display: flex;
 justify-content: center;
-height: 10%;
+height: 8vh;
 }
 .nav button{
 	width: 20vh;
 	height: 5vh;
-	border-radius: 15px;
-	cursor: pointer;
-	background-color: #2980B9;
-}
-.nav input{
-	display: flex;
-	height: 100%;
-	width: 30%;
 	border-radius: 5px;
+	margin-left: 2vh;
+	cursor: pointer;
+}
+.search{
+width: 50vh;
+height: 5vh;
+border-radius: 5px;
 }
 /* 第四部分 */
 .center{
 	font-family:kai;
 	font-size: 20px;
 	display: flex;
-	margin-top:2%;
+	margin-top:2vh;
 	height: 200px;
 }
 .choose{
@@ -116,7 +123,7 @@ margin-left: 7%;
 .choose ul{
 display: flex;
 justify-content: center;
-margin-top: 2%;
+margin-top: 1vh;
 }
 .masterpiece ul {
 	display: flex;
@@ -145,9 +152,9 @@ margin-left: 6%;
  }
  .leftBtn{
 position: absolute;
-left: -50%;
-top:10%;
 z-index:99;/*层级调高*/
+	left: 350px;
+	 top:300px;
  }
    .rightBtn{
 	position: absolute;
@@ -267,10 +274,11 @@ transform: scale(1.2,1.2);
 	
 #readingfeel{
 		font-family: kai;
-		margin-left: 40px;
-		margin-right: 100px;
+		margin-left: 20vh;
+		margin-right: 20vh;
 		border-top: 1px solid;
-		height: 200px;
+		height: 30vh;
+		border-bottom:1px solid ;
 	}
 /* 第六部分 */
 #footer li{
@@ -278,5 +286,6 @@ transform: scale(1.2,1.2);
 }
 #footer{
 text-align: center;
+margin-top: 2vh;
 
 }

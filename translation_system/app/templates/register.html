@@ -10,8 +10,15 @@
 <!-- 第一部分 -->
 <div id="top">
     <div class="wel">
-        <ul>
-            <li class='one'><a href="index.html">rt-books</a></li>
+        <ul>  <li class='one'><a herf="#">语言切换</a>
+                <ul class='twe animated'>
+                    <li><a href="#">英文</a></li>
+                    <li><a href="#">俄文</a></li>
+                    <li><a href="#">韩文</a></li>
+                    <li><a href="#">日文</a></li>
+                </ul>
+            </li>
+            <li class='one'><a href="/user/index">rt-books</a></li>
             <li class='one'><a herf="#">玄幻</a>
                 <ul class='twe animated'>
                     <li><a href="#">英文</a></li>
@@ -50,7 +57,6 @@
                 <button type="button"> 搜索</button>
             </li>
             <li class='one'><a href="#">登录</a></li>
-            <li class='one'><a href="#">注册</a></li>
 
         </ul>
     </div>
@@ -60,18 +66,16 @@
             <img src="{{ url_for('static', filename='img/welcom.jpeg') }}" width="300px" height="300px">
         </div>
         <div id="core2">
-            <h1 style="font-family: 'kai';">新用户注册 &nbsp</h4>
+            <h1 style="font-family: 'kai';">新用户注册 &nbsp</h1>
                 <span class="name">&nbsp&nbsp</span>用户名：&nbsp<input type="text" id="name" value="请输入你的用户名"/><br/><br/>
-                <span class="phone"> </span>手机号码：&nbsp<input type="text" id="phone" value="请输入你的手机号码"/><br/><br/>
                 <span class="ma"> </span>设置密码: &nbsp<input type="password" name="" id="password"
                                                             value="请输入密码"/><br/><br/>
                 <span class="mi"> </span>确认密码: &nbsp<input type="password" name="" id="password2"
                                                             value="请再次输入密码"/><br/><br/>
-                <!-- 	    <span class="yan"> &nbsp</span>验证码 :&nbsp <input type="text" id="code" value="请输入手机验证码" /><br /><br /> -->
                 <button type="button" id="button">立即注册</button>
                 <br/><br/>
                 <div id="enroll">
-                    已有账号，点击<a href="enroll.html">登录</a>
+                    已有账号，点击<a href="/user/login">登录</a>
                 </div>
         </div>
 
@@ -82,11 +86,7 @@
 <!-- 第三部分-->
 <div id="footer">
     <ul>
-        <li><a href="#">沪公网安备 31011502001275号增值电信业务经营许可证：沪B2-20080046 互联网ICP备案号：沪B2-20080046-1 出版经营许可证：新出发沪批字第 U3718
-            号</a></li>
-        <li><a href="#">Copyright © 2002-2022 www.qidian.com All Rights Reserved 版权所有 上海玄霆娱乐信息科技有限公司</a></li>
-        <li><a href="#">网络文化经营许可证：沪网文〔2021〕0374-020号 网络出版服务许可证：（署）网出证（沪）字第055号 营业执照</a></li>
-        <li><a href="#">请所有作者发布作品时务必遵守国家互联网信息管理办法规定，我们拒绝任何色情小说，一经发现，即作删除！举报电话：010-59357051</a></li>
+        <li><a href="#">重庆理工大学计算机科学与工程学院</a></li>
         <li><a href="#">本站所收录的作品、社区话题、用户评论、用户上传内容或图片等均属用户个人行为。如前述内容侵害您的权益，欢迎举报投诉，一经核实，立即删除，本站不承担任何责任</a></li>
     </ul>
 </div>
@@ -96,11 +96,9 @@
         var username = $('#name').val();
         var password = $('#password').val();
         var password2 = $('#password2').val();
-
         function success() {
             window.location.href = "/user/indexsucess";
         }
-
         $.post('/user/register', {username: username, password: password, password2: password2}, function (data) {
             alert(data.msg);
             if (data.code == 200) {
@@ -112,17 +110,11 @@
     $('#name').click(function () {
         $('#name').val('');
     })
-    $('#phone').click(function () {
-        $('#phone').val('');
-    })
     $('#password').click(function () {
         $('#password').val('');
     })
     $('#password2').click(function () {
         $('#password2').val('');
-    })
-    $('#code').click(function () {
-        $('#code').val('');
     })
     $('#search').click(function () {
         $('#search').val('');

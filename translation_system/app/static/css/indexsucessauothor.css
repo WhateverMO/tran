@@ -41,45 +41,76 @@ a:hover{
 	width: 100%;
 } */
 /* 第二部分 */
+#cen{
+	border-bottom: 1px solid;
+	margin-left: 40px;
+	margin-right: 40px;
+	margin-bottom: 10px;
+}
+body{
+	background: linear-gradient(125deg,#72b576,#97f17b,#79b974,#8ce79f,#86f890);
+	background-size: 500%;
+	animation: bjanimation 10s linear infinite;
+	font-size: kai;
+	height: 150vh;
+}
+@keyframes bjanimation{
+	
+0%{
+	background-position: 0% 50%;
+}
+50%{
+	background-position: 100% 50%;
+}
+100%{
+	background-position: 0% 50%;
+}
+}
 *{
 	padding: 0;
 	margin: 0;
 }
-.wel{
-display:flex;
-height:10%;
-width: 100%;
-/* 	position: fixed; */
+#cen{
+	border-bottom: 1px solid;
+	margin-left: 40px;
+	margin-right: 40px;
+	margin-bottom: 10px;
 }
-.wel ul  li {
+#n {
 	font-family:kai;
 	font-size: 20px;
-	display: inline-flex;
-
-	}
-	.wel ul{
-	height: 50px;
-	width: 100%;
-	margin-top: 1%;
-	display: flex;
-	justify-content: space-around;
-	}
+	display: inline-block;
+	margin-left: 15vh;
+	margin-bottom: 2vh;
+	margin-top: 2vh;
+	}	
+.langguge {
+	display: none;
+	position: absolute;
+}
+.lang:hover ul{
+	display: block;
+}
+.lang{
+	position: relative;
+}
 /* 第三部分 */
 .nav{
 display: flex;
 justify-content: center;
 height: 10%;
+margin-top:2vh;
 }
 .nav button{
-	width: 4%;
-	height: 2%px;
+	width: 10vh;
+	height: 9vh;
 	border-radius: 5px;
 	cursor: pointer;
 }
 .nav input{
 	display: flex;
-	height: 100%;
-	width: 30%;
+	height: 8vh;
+	width: 60vh;
 	border-radius: 5px;
 }
 /* 第四部分 */

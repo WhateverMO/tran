@@ -12,6 +12,20 @@ User = 'sjds@mysqlforshejidasai'
 Password = 'Shejidasai123456'
 Charset='utf8'
 
+# Host = 'rt-books.ltd'
+# Port = 3306
+# Db = 'test_db'
+# User = 'root'
+# Password = 'Shejidasai123456'
+# Charset='utf8'
+
+# Host = 'localhost'
+# Port = 3306
+# Db = 'test_db'
+# User = 'root'
+# Password = 'shejidasai123456'
+# Charset='utf8'
+
 g_mysql_url = 'mysql+pymysql://%s:%s@%s:%d/%s?charset=%s' % (User, Password, Host, Port,Db,Charset)
 
 engine = create_engine(g_mysql_url)
@@ -24,7 +38,7 @@ Session = sessionmaker(bind=engine)
 
 class UsingAlchemy(object):
 
-    def __init__(self, commit=True, log_time=True, log_label='总用时'):
+    def __init__(self, commit=True, log_time=True, log_label=''):
         """
 
         :param commit: 是否在最后提交事务(设置为False的时候方便单元测试)
@@ -33,7 +47,7 @@ class UsingAlchemy(object):
         """
         self._log_time = log_time
         self._commit = commit
-        self._log_label = log_label
+        self._log_label = log_label+" -- 总用时"
         self._session = Session()
 
     def __enter__(self):

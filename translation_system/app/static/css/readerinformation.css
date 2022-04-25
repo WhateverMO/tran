@@ -1,0 +1,118 @@
+
+@font-face {
+	font-family:kai;
+	src: url('../font/宋刻本秀楷体.ttf');
+}
+@font-face {
+  font-family: 'icomoon';
+  src:  url('../fonts/icomoon.eot?2qiqq5');
+  src:  url('../fonts/icomoon.eot?2qiqq5#iefix') format('embedded-opentype'),
+    url('../fonts/icomoon.ttf?2qiqq5') format('truetype'),
+    url('../fonts/icomoon.woff?2qiqq5') format('woff'),
+    url('../fonts/icomoon.svg?2qiqq5#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+body{
+	background: linear-gradient(125deg,#2c3e50,#27ae60,#2980b9,#e74c3c,#8e44ad);
+	background-size: 500%;
+	animation: bjanimation 10s linear infinite;
+}
+@keyframes bjanimation{
+	
+0%{
+	background-position: 0% 50%;
+}
+50%{
+	background-position: 100% 50%;
+}
+100%{
+	background-position: 0% 50%;
+}
+}
+li{
+	list-style: none;
+}
+a{
+	text-decoration: none;
+	color: #000000;
+}
+a:hover{
+	color: #00FFFF;
+}
+.wel {
+		width: 1340px;
+		height: 60px;
+	}/* //子元素有浮动需要为父元素添加高度 */
+.wel button{
+		border-radius: 7px;
+		width: 80px;
+		height: 30px;
+		cursor:pointer;
+	}
+.wel input{
+		padding: 12px;
+		border-radius: 5px;
+		opacity: 0.7;
+	}
+.one {
+	display: inline;
+	padding:20px;
+	font-family:kai;
+	font-size: 20px;
+	position: relative;
+	float: left;
+	}
+.twe{
+		display:none;
+		position: absolute;
+	}
+.twe li{
+		width: 40px;
+	}
+.one:hover ul {
+    display: block;
+}
+/* 第二部分 */
+
+#c{
+	padding-top: 20px;
+	height: 300px ;
+	width: 700px;
+	margin-left: 400px;
+	font-family: kai;
+	font-size: 20px;
+}
+
+#num span{
+	margin-left: 50px;
+}
+#focus span{
+	margin: 15px;
+}
+
+#c2 div{
+	margin-top: 20px;
+}
+#c button{
+	height: 40px;
+	width: 120px;
+}
+.tro{
+	display: inline-block;
+	margin-left: 40px;
+}
+.tro div{
+margin-bottom: 20px;
+}
+
+/* 第三部分 */
+#footer li{
+	font-size: small;
+}
+#footer{
+text-align: center;
+height:10vh;
+margin-top:10vh;
+}

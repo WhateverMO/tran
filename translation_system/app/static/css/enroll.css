@@ -47,7 +47,7 @@ body{
 }
 
 .wel {
-		height: 60px;
+	height: 60px;
 	display: flex;
 	}/* //子元素有浮动需要为父元素添加高度 */
 .one {

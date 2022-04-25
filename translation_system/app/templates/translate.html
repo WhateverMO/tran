@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" href="{{ url_for('static' ,filename='css/translate.css')}}" type="text/css">
+		<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+	</head>
+	<body>
+		<!-- 第一部分 -->
+	<div class="wel">
+		<ul>
+			<li class='one'><a herf="#">切换语言</a>
+			<ul class='twe animated'>
+			<li><a href="#">英文</a></li>
+			<li><a href="#">俄文</a></li>
+			<li><a href="#">韩文</a></li>
+			<li><a href="#">日文</a></li>
+			</ul></li>	
+			<li class='one' ><a href="/user/indexsucessauthor" >rt-books</a></li>
+			<li class='one'><a herf="#">玄幻</a>
+			<ul class='twe animated'>
+			<li><a href="#">英文</a></li>
+			<li><a href="#">俄文</a></li>
+			<li><a href="#">韩文</a></li>
+			<li><a href="#">日文</a></li>
+			</ul></li>			
+			<li class='one'><a herf="#">都市</a>
+			<ul class='twe animated'>
+			<li><a href="#">英文</a></li>
+			<li><a href="#">俄文</a></li>
+			<li><a href="#">韩文</a></li>
+			<li><a href="#">日文</a></li>
+			</ul></li>
+			<li class='one' ><a href="#">仙侠</a>
+			<ul class='twe animated'>
+			<li><a href="#">英文</a></li>
+			<li><a href="#">俄文</a></li>
+			<li><a href="#">韩文</a></li>
+			<li><a href="#">日文</a></li>
+			</ul></li>
+			<li class='one' ><a href="#">历史</a>
+			<ul class='twe animated'>
+			<li><a href="#">英文</a></li>
+			<li><a href="#">俄文</a></li>
+			<li><a href="#">韩文</a></li>
+			<li><a href="#">日文</a></li>
+			</ul></li>
+			<li class='one' ><a herf="#">更多</a></li>
+			<li class='one'>
+			<input type="search" name="" id="search" value="查询书籍" style="width: 250px ; height: 30px;" />
+			<button type="button">搜索 </button></li>
+			<li class='one' ><a href="index.html" >退出登录</a></li>
+				<li class='one' ><a href="#">我的信息</a>
+				<ul class='twe animated'>
+				<li><a href="/user/readerinformation">用户信息</a></li>
+				<li><a href="/user/authorinfo">作者信息</a></li>
+				</ul></li>
+		
+		</ul>
+	</div>
+		<!-- 第二部分 -->
+		<span id="all1">
+			<ul>
+				<li id="name">小说名字</li>
+				<li id="section">
+					<select name="" value="">
+						<option value="">第一章</option>
+								<option value="">第二章</option>
+										<option value="">第三章</option>
+												<option value="">第四章</option>
+					</select>
+					<span id="">
+					章节名字
+					</span>
+					<span id="">
+						作者名字
+					</span>
+					</li>
+						<li id="content">
+							<textarea rows="50" cols="50">
+一粒尘可填海，一根草斩尽日月星辰，弹指间天翻地覆。群雄并起，万族林立，诸圣争霸，乱天动地。问苍茫大地，谁主沉浮一个少年从大荒中走出，一切从这里开始
+===序章 大荒===
+
+夜已深，漆黑一片，景物不可见。但山中并不宁静，猛兽咆哮，震动山河，万木摇颤，乱叶簌簌坠落。
+
+    群山万壑间，洪荒猛兽横行，太古遗种出没，各种可怕的声音在黑暗中此起彼伏，直欲裂开这天地。
+
+    山脉中，远远望去有一团柔和的光隐现，在这黑暗无尽的夜幕下与万山间犹如一点烛火在摇曳，随时会熄灭。
+
+    渐渐接近，可以看清那里有半截巨大的枯木，树干直径足有十几米，通体焦黑。除却半截主干外，它只剩下了一条柔弱的枝条，但却在散发着生机，枝叶晶莹如绿玉刻成，点点柔和的光扩散，将一个村子笼罩。
+
+    确切的说，这是一株雷击木，在很多年前曾经遭遇过通天的闪电，老柳树巨大的树冠与旺盛的生机被摧毁了。如今地表上只剩下米高的一段树桩，粗的惊人，而那仅有的一条柳枝如绿霞神链般，光晕弥漫，笼罩与守护住了整个村子，令这片栖居地朦朦胧胧，犹若一片仙乡，在这大荒中显得很神秘。
+
+							</textarea>
+						</li>
+					<li id="button"><button type="button">上传作品</button><button type="button">保存作品</button></li>
+			</ul>
+		</span>				
+<span id="all2">
+	<ul>
+		<li id="name">小说名字</li>
+		<li id="section">
+			<select name="" value="">
+				<option value="">第一章</option>
+						<option value="">第二章</option>
+								<option value="">第三章</option>
+										<option value="">第四章</option>
+			</select>
+			<span id="">
+			章节名字
+			</span>
+			<span id="">
+				作者名字
+			</span>
+			</li>
+				<li id="content">
+					<textarea rows="20" cols="40"></textarea>
+				</li>
+					<li id="button"><button type="button">上传作品</button><button type="button">保存作品</button></li>
+	</ul>
+</span>
+<!-- 		第三部分 -->
+		<div id="footer">
+			<ul>
+				<li><a href="#">重庆理工大学计算机科学与工程学院</a></li>
+				<li><a href="#">本站所收录的作品、社区话题、用户评论、用户上传内容或图片等均属用户个人行为。如前述内容侵害您的权益，欢迎举报投诉，一经核实，立即删除，本站不承担任何责任</a></li>
+			</ul>
+		</div>
+		
+		<script>
+		<script>
+			function readerenroll(){
+			window.location.href="/user/indexsucess";
+		}
+		$('#button').click(function(){
+			$.post('/user/login',{},function(data){
+			alert(data.msg);//判断用户的id是普通
+			}
+			},'json')//登录用户
+			})
+		</script>
+		</script>
+	</body>
+</html>
