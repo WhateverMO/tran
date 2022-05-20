@@ -40,7 +40,7 @@ a:hover{
 	font-size: 20px;
 	position: relative;
 	float: left;
-	margin-left: 3vh;
+	margin-left: 5vh;
 	}
 .twe{
 		display:none;
@@ -65,36 +65,35 @@ a:hover{
 	background-color: #CCCCCC;
 	cursor:pointer;
 }
-h3{
-	display: inline-block;
-}
 #b1{
-	height: 60vh;
+	height: 65vh;
 	margin-top: 10vh;
+	font-size: 20px;
+	font-family: kai;
+}
+#b1 button{
+		border-radius: 5px;
+		width: 150px;
+		height: 40px;
+		background-color: #CCCCCC;
+		cursor:pointer;
 }
 #intro  li{
-margin-bottom: 5vh;
+margin-bottom: 4vh;
 }
 
-#intro input[type=text]
-{	border-radius: 15px;
-	width: 30vh;
-	height: 4vh;
-	margin-left: 2vh;
-	background-color: #CCCCCC;
-	cursor:pointer;	
-}
 #photo{
 	float:left;
 	margin-left: 60vh;
 }
 #intro{
 	float: right;
-	margin-right: 70vh;
+	margin-right: 60vh;
 }
 #footer{
-	height: 20vh;
+	height: 10vh;
 	text-align: center;
+	margin-top: 10vh;
 }
 #footer li{
 	font-size: small;

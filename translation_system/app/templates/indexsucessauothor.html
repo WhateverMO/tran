@@ -3,44 +3,46 @@
 	<head>
 		<meta charset="utf-8" />
 		<title></title>
-			<link rel="stylesheet" href="{{ url_for('static' ,filename='css/indexsucessauothor.css')}}" type="text/css">
-				<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+		<link rel="stylesheet" href="{{ url_for('static',filename='css/indexsucessauothor.css')}}"type="text/css">
+		<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
 	</head>
 	<body>
-<!-- 		第二部分 -->
-	<div class="wel">
-		<ul id="cen">
-		<li id="n" class="lang"><a href="#">语言切换</a>
-			<ul class="langguge">
-			<li><a href="#">英文</a></li>
-			<li><a href="#">俄文</a></li>
-			<li><a href="#">韩文</a></li>
-			<li><a href="#">日文</a></li>
-			</ul></li> 
-					<li id="n" class="lang"><a href="#">我的信息</a>
+<!-- 		第一部分 -->
+		<div class="wel">
+			<ul id="cen">
+				<li id="one" class="lang"><a href="#">语言切换</a>
+					<ul class="langguge">
+					<li><a href="#">英文</a></li>
+					<li><a href="#">俄文</a></li>
+					<li><a href="#">韩文</a></li>
+					<li><a href="#">日文</a></li>
+					</ul></li> 	
+					<li id="one" class="lang"><a href="#">添加图书</a>
 						<ul class="langguge">
-						<li><a href="/user/readerinformation">读者信息</a></li>
-						<li><a href="/user/authorinfo">作者信息</a></li>
-						</ul></li> 
-				<li id="n" ><a href="/user/indexsucessauthor">rt-books</a></li>
-					<li id="n" >欢迎光临</li>
-			<li id="n"><a href="/user/sucesscheckpassword" >修改密码</a></li>
-			<li id="n"><a href="/user/index" id="logout">退出登录</a></li>
-			<li id="n" class="lang"><a href="#">添加图书</a>
-				<ul class="langguge">
-				<li><a href="/user/author/add_books_index">创建新书</a></li>
-				<li><a href="/user/author/addbooks">更新图书</a></li>
-					<li><a href="/user/author/translate_index">翻译新书</a></li>
-				<li><a href="/user/author/translate>">更新翻译</a></li>
-				</ul></li> 
-		</ul>
-	</div> 
-	<!-- 	第三部分 -->
-		<div class="nav">
-			<input type="text" id="search" value="输入你想查询的图书" />
-		 <button type="button" >查询</button>
+						<li><a href="/user/author/add_books_index">创建新书</a></li>
+						<li><a href="/user/author/translate_index">翻译新书</a></li>
+						</ul></li> 	
+				<li id="one" ><a href="index.html">rt-books</a></li>
+				<li id="one" >欢迎光临</li>
+				<li id="one" class="lang"><a href="#">用户信息</a>
+					<ul class="langguge">
+					<li><a href="/user/readerinformation">读者信息</a></li>
+					<li><a href="/user/authorinfo">作者信息</a></li>
+					</ul></li> 	
+					<li id="one">
+						<a href="/user/sucesscheckpassword">修改密码</a>
+						</li>
+				<li id="one">
+				<a href="#" id="logout">退出登录</a>
+				</li>
+			</ul>
 		</div>
-		<!-- 第四部分 -->
+	<!-- 	第二部分 -->
+		<div class="nav">
+	<input type="text" class="search" placeholder="搜索">
+		 <button type="button" >查询图书</button>
+		</div>
+		<!-- 第三部分 -->
 		<div class="choose">
 			<ul>
 				<li><a href="#">作品分类</a></li>
@@ -51,48 +53,41 @@
 								<li><a href="#">推荐专区</a></li>
 			</ul>
 			</div>
-			<!-- 第五部分 -->
+			<!-- 第四部分 -->
 			<div class="center">
 			<span class="masterpiece">
 						<ul>
 							<li ><a href="#">玄幻</a>
 							</li>
 							<li ><a href="#">奇幻</a>
-							</li>
-						</ul>
-						<ul>
-							<li ><a href="#">武侠</a>
-						
+							</li>			
+							<li ><a href="#">武侠</a>						
 							</li>
 							<li ><a href="#">仙侠</a>	
 							</li>
-						</ul>
-						<ul>
 							<li><a href="#">都市</a></li>
-							<li><a href="#">现实</a></li>
+							<li><a href="#">现实</a></li>					
 						</ul>
-						<ul>
+					</span>
+					<span class="masterpiece">
+						<ul>	
 							<li><a href="#">军事</a></li>
-							<li><a href="#">历史</a></li>
-						</ul>
-						<ul>
+							<li><a href="#">历史</a></li>					
 							<li><a href="#">游戏</a></li>
-							<li><a href="#">体育</a></li>
-						</ul>
-						<ul>
+							<li><a href="#">体育</a></li>			
 							<li><a href="#">科幻</a></li>
 							<li><a href="#">悬疑</a></li>
 						</ul>
 					</span>
-					
+			
 			<span id=banner>
-				  <ul class="imgList">
-			    <li style="z-index: 1;"><a href="#"><img src="{{ url_for('static',filename='img/3.jpg')}}" width="800px"height="300px"></a></li>
-			    <li><a href="#"><img src="{{ url_for('static',filename='img/1.jpg')}}" width="800px"height="300px"></a></li>
-			    <li><a href="#"><img src="{{ url_for('static',filename='img/2.jpg')}}"width="800px" height="300px"alt=""></a></li>
-			    <li><a href="#"><img src="{{ url_for('static',filename='img/3.jpg')}}" width="800px"height="300px" alt=""></a></li>
-			    <li><a href="#"><img src="{{ url_for('static',filename='img/4.jpg')}}" width="800px"height="300px"alt=""></a></li>
-			  </ul>
+			  <ul class="imgList">
+			 <li style="z-index: 1;"><a href="#"> <img src="{{ url_for('static',filename='img/lun3.jpg')}}"><</a></li>
+			    <li><a href="#"><img src="{{ url_for('static',filename='img/lun1.jpg')}}"></a></li>
+				   <li><a href="#"><img src="{{ url_for('static',filename='img/lun2.jpg')}}"></a></li>
+				   <li><a href="#"><img src="{{ url_for('static',filename='img/lun4.jpg')}}"></a></li>
+				   <li><a href="#"><img src="{{ url_for('static',filename='img/lun1.jpg')}}"></a></li>
+			  </ul> 
 			<a class="leftBtn" href="javascript:void(0)">&lt;</a>
 				<a class="rightBtn" href="javascript:void(0)">&gt;</a>
 			  <span class="focusList">
@@ -102,149 +97,77 @@
 			    <a href="javascript:void(0)"></a>
 			    <a href="javascript:void(0)"></a>
 			  </span>
-			</span> 
-			
-<!--					<span class="hot">-->
-<!--						-->
-<!--						<ul>-->
-<!--							<li>热门咨询</li>-->
-<!--							<li>aaa</li>-->
-<!--							<li>bbb</li>-->
-<!--							<li>ccc</li>-->
-<!--							<li>aaa</li>-->
-<!--							<li>bbb</li>-->
-<!--							<li>ccc</li>-->
-<!--						</ul>-->
-<!--					</span>	-->
+			</span>		
 			</div>	
 	<!-- 	第五部分 -->
-		<div class="reconmend">
-			<div id="reconmendlist">
-				<h2>图书推荐榜</h2>
-			</div>
-<span class="week">
-	<ul><!-- 每一个li放两个span分别是图片和介绍 -->
-		<li>每周推荐</li>
-		<li>
-		<span class="weekl">
-		<a href="/user/read_book/introduce"><img src="{{ url_for('static',filename='img/book_11.jpg')}}" width="150px"height="240px"alt=""></a>
-		</span>
-		<span class="weekr">
-				<a href="/user/read_book/introduce"><h5>1、小说名字:</h5></a>
-					<a href="/user/read_book/introduce"><h5>作者:</h5></a>
-		</span>
+	<div class="reconmend">
+<h2>图书推荐榜</h2>
+<div class="week">
+	<ul>每周推荐</ul>
+		<div id="onebook">
+			<li> <a href="/user/read_book/introduce"><img src="{{ url_for('static',filename='img/book_6.jpg')}}" width="200px" height="200px"></a>
 		</li>
-		<li>
-		<span class="weekl">
-		<a href="/user/read_book/introduce"><img src="{{ url_for('static',filename='img/book_8.jpg')}}" width="150px"height="240px"alt=""></a>
-		</span>
-		<span class="weekr">
-	<a href="/user/read_book/introduce"><h5>1、小说名字：哈哈</h5></a>
-		<a href="/user/read_book/introduce"><h5>作者:</h5></a>
+		<li>小说名字：<h5>夜的命名术</h5></li>
+		<li>作者：<h5>会说话的肘子</h5></li>
+		<li>简介：<h5>　蓝与紫的霓虹中，浓密的钢铁苍穹下，数据洪流的前端，是科技革命之后的世界，也是现实与虚幻的分界。
+			　　钢铁与身体，过去与未来。
+			　　这里，表世界与里世界并存，面前的一切，像是时间之墙近在眼前。
+			　　黑暗逐渐笼罩。
+			　　可你要明白啊我的朋友，我们不能用温柔去应对黑暗，要用火。 </h5></li>
 
-		</span>
+</div>
+</div>
+
+<div class="week">
+	<ul>编辑推荐</ul>
+		<div id="onebook">
+		<li><a href="/user/read_book/introduce"><img src="{{ url_for('static',filename='img/book_3.jpg')}}" width="200px" height="200px"></a>
 		</li>
-		<li>
-		<span class="weekl">
-	<a href="/user/read_book/introduce"><img src="{{ url_for('static',filename='img/book_6.jpg')}}" width="150px"height="240px"alt=""></a>
-		</span>
-		<span class="weekr">
-	<a href="/user/read_book/introduce"><h5>1、小说名字</h5></a>
-		<a href="/user/read_book/introduce"><h5>作者:神秘复苏</h5></a>
-		</span>
+		<li>小说名字：<h5>夜的命名术</h5></li>
+		<li>作者：<h5>会说话的肘子</h5></li>
+		<li>简介：<h5>　蓝与紫的霓虹中，浓密的钢铁苍穹下，数据洪流的前端，是科技革命之后的世界，也是现实与虚幻的分界。
+			　　钢铁与身体，过去与未来。
+			　　这里，表世界与里世界并存，面前的一切，像是时间之墙近在眼前。
+			　　黑暗逐渐笼罩。
+			　　可你要明白啊我的朋友，我们不能用温柔去应对黑暗，要用火。 </h5></li>
+
+</div>
+</div>
+<div class="week">
+	<ul>最新推荐</ul>
+		<div id="onebook">
+		<li>		<li> <a href="./bookintroduce.html"><img src="{{ url_for('static',filename='img/book_9.jpg')}}" width="200px" height="200px"></a>
 		</li>
-	</ul>
-</span>
-		<span class="editor">
-			<ul>
-			<li>编辑推荐</li>
-	<li>
-	<span class="editorl">
-	<a href="/user/read_book/introduce"><img src="{{ url_for('static',filename='img/book_5.jpg')}}" width="150px"height="240px"alt=""></a>
-	</span>
-	<span class="editorr">
-	<a href="/user/read_book/introduce"><h5>1、小说名字####</h5></a>
-		<a href="/user/read_book/introduce"><h5>作者:贼人休走</h5></a>
+		<li>小说名字：<h5>夜的命名术</h5></li>
+		<li>作者：<h5>会说话的肘子</h5></li>
+		<li>简介：<h5>　蓝与紫的霓虹中，浓密的钢铁苍穹下，数据洪流的前端，是科技革命之后的世界，也是现实与虚幻的分界。
+			　　钢铁与身体，过去与未来。
+			　　这里，表世界与里世界并存，面前的一切，像是时间之墙近在眼前。
+			　　黑暗逐渐笼罩。
+			　　可你要明白啊我的朋友，我们不能用温柔去应对黑暗，要用火。 </h5></li>
 
-	</span>
-	</li>
-	<li>
-	<span class="editorl">
-	<a href="/user/read_book/introduce"><img src="{{ url_for('static',filename='img/book_4.jpg')}}" width="150px"height="240px"alt=""></a>
-	</span>
-	<span class="editorr">
-	<a href="/user/read_book/introduce"><h5>1、小说名字####</h5></a>
-		<a href="/user/read_book/introduce"><h5>作者:</h5></a>
+</div>
+</div>
 
-	</span>
-	</li>
-	<li>
-	<span class="editorl">
-	<a href="/user/read_book/introduce"><img src="{{ url_for('static',filename='img/book_3.jpg')}}" width="150px"height="240px"alt=""></a>
-	</span>
-	<span class="editorr">
-	<a href="/user/read_book/introduce"><h5>1、小说名字####</h5></a>
-		<a href="/user/read_book/introduce"><h5>作者:</h5></a>
-
-	</span>
-	</li>
-		</ul>
-		</span>
-		<span class="new">
-			<ul>
-		<li>最新推荐</li>
-	<span class="editorl">
-	<a href="/user/read_book/introduce"><img src="{{ url_for('static',filename='img/book_2.jpg')}}" width="150px"height="240px"alt=""></a>
-	</span>
-	<span class="editorr">
-	<a href="/user/read_book/introduce"><h5>1、小说名字11</h5></a>
-		<a href="/user/read_book/introduce"><h5>作者:明天</h5></a>
-
-	</span>
-	</li>
-	<li>
-	<span class="editorl">
-<a href="/user/read_book/introduce"><img src="{{ url_for('static',filename='img/book_11.jpg')}}" width="150px"height="240px"alt=""></a>
-	</span>
-	<span class="editorr">
-	<a href="/user/read_book/introduce"><h5>1、小说名字：悲伤</h5></a>
-		<a href="/user/read_book/introduce"><h5>作者:后台</h5></a>
-
-	</span>
-	</li>
-	<li>
-	<span class="newl">
-<a href="/user/read_book/introduce"><img src="{{ url_for('static',filename='img/book_1.jpg')}}" width="150px"height="240px"alt=""></a>
-	</span>
-	<span class="newr">
-	<a href="/user/read_book/introduce"><h5>1、小说名字：今天</h5></a>
-		<a href="/user/read_book/introduce"><h5>作者:心动太多</h5></a>
-
-	</span>
-	</li>
-			</ul>
-		</span>
-		</div>
+</div>
 	<!-- 第六部分 -->
 	<div id="share">
 <h1> 美句欣赏</h1>
-	<img src="{{ url_for('static',filename='img/f.png')}}">
+	<img src="{{ url_for('static',filename='img/f.png')}}" width="200px" height="200px">
 		<span><h3 >"知识有两种：我们自己知道一个问题的答案，<br>或我们知道在哪儿我们可以找到这个问题的答案"。 <br>
 		– 塞缪尔·约翰逊</h3></span>
 	</div>
 	<div id="hotbook">
 		<h1>热门图书</h1>
 		<div id="book">
-		<a href="/user/read_book/introduce"><img src="{{ url_for('static',filename='img/book_1.jpg')}}" width="150px"height="240px"alt=""></a>
-				<a href="/user/read_book/introduce"><img src="{{ url_for('static',filename='img/book_1.jpg')}}" width="150px"height="240px"alt=""></a>
-				<a href="/user/read_book/introduce"><img src="{{ url_for('static',filename='img/book_2.jpg')}}" width="150px"height="240px"alt=""></a>
-				<a href="/user/read_book/introduce"><img src="{{ url_for('static',filename='img/book_3.jpg')}}" width="150px"height="240px"alt=""></a>
-				<a href="/user/read_book/introduce"><img src="{{ url_for('static',filename='img/book_4.jpg')}}" width="150px"height="240px"alt=""></a>
-				<a href="/user/read_book/introduce"><img src="{{ url_for('static',filename='img/book_5.jpg')}}" width="150px"height="240px"alt=""></a>
-				<a href="/user/read_book/introduce"><img src="{{ url_for('static',filename='img/book_6.jpg')}}" width="150px"height="240px"alt=""></a>
-				<a href="/user/read_book/introduce"><img src="{{ url_for('static',filename='img/book_7.jpg')}}" width="150px"height="240px"alt=""></a>
-				<a href="/user/read_book/introduce"><img src="{{ url_for('static',filename='img/book_8.jpg')}}" width="150px"height="240px"alt=""></a>
-				<a href="/user/read_book/introduce"><img src="{{ url_for('static',filename='img/book_9.jpg')}}" width="150px"height="240px"alt=""></a>
+		<a href="#"><img src="{{ url_for('static',filename='img/book_1.jpg')}}"></a>
+			<a href="#"><img src="{{ url_for('static',filename='img/book_3.jpg')}}"></a>
+			<a href="#"><img src="{{ url_for('static',filename='img/book_4.jpg')}}"></a>
+			<a href="#"><img src="{{ url_for('static',filename='img/book_5.jpg')}}"></a>
+			<a href="#"><img src="{{ url_for('static',filename='img/book_6.jpg')}}"></a>
+			<a href="#"><img src="{{ url_for('static',filename='img/book_7.jpg')}}"></a>
+			<a href="#"><img src="{{ url_for('static',filename='img/book_8.jpg')}}"></a>
+			<a href="#"><img src="{{ url_for('static',filename='img/book_9.jpg')}}"></a>
 		</div>
 	</div>
 	<div id="readingfeel">
@@ -252,24 +175,24 @@
 		<span><h3 >"读书心得读书是我们生活中必不可少的程序，书的世界是丰富多彩的，什么都有。读书让我们领悟了人世间的思想与认识：<br/>思想：在读书中，我们读的认真，就会感到自己仿佛身临其境，感觉自己就是书本里的人物，有自己的思想。<br/>认识：读书，可以让我们去看世界，了解国内外的时，认识许多有名的人物"。 <br>
 		</h3></span>
 	</div>
-
 	
 	<!-- 	第六部分 -->
 	<div id="footer">
 		<ul>
-		 <li><a href="#">重庆理工大学计算机科学与工程学院</a></li>
+	<li><a href="#">重庆理工大学计算机科学与工程学院 </a></li>
 			<li><a href="#">本站所收录的作品、社区话题、用户评论、用户上传内容或图片等均属用户个人行为。如前述内容侵害您的权益，欢迎举报投诉，一经核实，立即删除，本站不承担任何责任</a></li>
 		</ul>
 	</div>
 		
 	</body>
 	<script>
-	$('#logout').click(function(){
-		$.delete('/user/logout',{},function(data){
-		alert(data.msg);
-		},'json')//登录用户
-		})
-	
+			$('#logout').click(function(){
+			$.delete('/user/logout',{},function(data){
+			alert(data.msg);
+			},'json')//登录用户
+			})
+
+
 function changeImg(a){//实参代表图片索引的一个数字
       $('.imgList li').eq(a).fadeIn().siblings().fadeOut();//淡入显示，其它隐藏
       $('.focusList a').eq(a).addClass('cur').siblings().removeClass('cur');//添加class，其它删除
@@ -326,3 +249,4 @@ function changeImg(a){//实参代表图片索引的一个数字
 
   </script>
 </html>
+

@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title></title>
-		<link rel="stylesheet" href="{{ url_for('static' ,filename='css/addbooks.css')}}" type="text/css">
+		<link rel="stylesheet" href="{{ url_for('static',filename='css/addbooks.css')}}"type="text/css">
 		<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
 	</head>
 	<body>
@@ -49,30 +49,31 @@
 			<li class='one'>
 			<input type="search" name="" id="search" value="查询书籍" style="width: 250px ; height: 30px;" />
 			<button type="button">搜索 </button></li>
-			<li class='one'><a href="/user/index" >退出登录</a></li>
-			<li class='one' ><a href="/user/sucesscheckpassword" >修改密码</a></li>
+			<li class='one'><a href="index.html" >退出登录</a></li>
+			<li class='one' ><a href="sucesscheckpassword.html" >修改密码</a></li>
 		<li class='one' ><a href="#">我的信息</a>
 		<ul class='twe animated'>
-		<li><a href="/user/readerinformation">读者信息</a></li>
-		<li><a href="/user/authorinfo">作者信息</a></li>
+		<li><a href="readerinformation.html">读者信息</a></li>
+		<li><a href="authorinfo.html">作者信息</a></li>
+		
 		</ul>
 	</div>
 		<!-- 第二部分 -->
 
 			<div id="b1">
 				<div id="photo">
-						<img src="{{ url_for('static' ,filename='img/b.jpg')}}" >
+					<img src="{{ url_for('static',filename='img/b.jpg')}}">
 					</div>
 					<div id="intro">
 						<li>
 						<div class="mui-input-row">
-							<label>图书id: </label>
+							<label>图书id: <input type="text"></label>
 						</div>
 						</li>
 						
 						<li>
 						<div class="mui-input-row">
-							<label>作者id: </label>
+							<label>作者id: <input type="text"> </label>
 						</div>
 						</li>
 						
@@ -108,7 +109,7 @@
 						<div class="mui-input-row">
 							<label>作品简介</label>
 							<div id="in">
-							<textarea rows="3" cols="15"></textarea>	
+							<textarea rows="3" cols="25"></textarea>	
 							</div>
 						</div>
 						</li>
@@ -126,18 +127,22 @@
 			</ul>
 		</div>
 		
-		
-		
 		<script>
-			function readerenroll(){
-			window.location.href="/user/addbookcontent";
-		}
+		$('#search').click(function(){
+			$('#search').val('');
+		})
+
 		$('#button').click(function(){
-			$.post('/user/author/add_books_index',{},function(data){
-			alert(data.msg);//判断用户的id是普通
-			}
-			},'json')//登录用户
-			})
+			var username=$('#name').val();
+			var password=$('#password').val();
+			var password2=$('#password2').val();
+			$.post('/user/register',{username:username,password:password,password2:password2},function(data){
+				alert(data.msg);
+				if(data.code==200)
+				   success();
+			},'json')//用户注册
+		})
 		</script>
 	</body>
 </html>
+

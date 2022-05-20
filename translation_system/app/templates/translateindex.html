@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<title></title>
-			<link rel="stylesheet" href="{{ url_for('static' ,filename='css/translateindex.css')}}" type="text/css">
+		<link rel="stylesheet" href="{{ url_for('static',filename='css/translateindex.css')}}"type="text/css">
 				<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
 	</head>
 	<body>
@@ -17,19 +17,19 @@
 				<li><a href="#">韩文</a></li>
 				<li><a href="#">日文</a></li>
 				</ul></li> 
-				<li class='one' ><a href="/user/indexsucessauthor" >rt-books</a></li>
+				<li id="n" ><a href="indexsucessauothor.html">rt-books</a></li>
 						<li id="n" >欢迎光临</li>
 						<li id="n" class="lang"><a href="#">我的信息</a>
 							<ul class="langguge">
-							<li><a href="/user/authorinfo">作者信息</a></li>
-							<li><a href="/user/readerinformation">读者信息</a></li>
+							<li><a href="authorinfo.html">作者信息</a></li>
+							<li><a href="readerinformation.html">读者信息</a></li>
 							</ul></li> 
-				<li id="n"><a href="/user/sucesscheckpassword" >修改密码</a></li>
-				<li id="n"><a href="/user/index" id="logout">退出登录</a></li>
+				<li id="n"><a href="sucesscheckpassword.html" >修改密码</a></li>
+				<li id="n"><a href="index.html" id="logout">退出登录</a></li>
 			</ul>
 		</div> 
 		<div id="searchbook">
-			<input type="" name="" id="search" value="输入你要搜索的图书名字" />
+			<input type="" name="" id="search" value="输入你要翻译的图书名字" />
 				<button type="button">点击搜索 </button>
 			</div>
 				
@@ -67,17 +67,17 @@
 				</ul>
 			</div>
 			<div id="book">
-			<li>	<a href="/user/author/translate_option"><img src="{{ url_for('static',filename='img/book_1.jpg')}}" width="150px"height="240px"alt=""></a></li>
-			<li>	<a href="/user/read_book/introduce"><img src="{{ url_for('static',filename='img/book_2.jpg')}}" width="150px"height="240px"alt=""></a></li>
-			<li>	<a href="/user/read_book/introduce"><img src="{{ url_for('static',filename='img/book_3.jpg')}}" width="150px"height="240px"alt=""></a></li>
-			<li>	<a href="/user/read_book/introduce"><img src="{{ url_for('static',filename='img/book_4.jpg')}}" width="150px"height="240px"alt=""></a></li>
-			<li>	<a href="/user/read_book/introduce"><img src="{{ url_for('static',filename='img/book_6.jpg')}}" width="150px"height="240px"alt=""></a></li>
-			<li>	<a href="/user/read_book/introduce"><img src="{{ url_for('static',filename='img/book_7.jpg')}}" width="150px"height="240px"alt=""></a></li>
-			<li>	<a href="/user/read_book/introduce"><img src="{{ url_for('static',filename='img/book_8.jpg')}}" width="150px"height="240px"alt=""></a></li>
-			<li>	<a href="/user/read_book/introduce"><img src="{{ url_for('static',filename='img/book_11.jpg')}}" width="150px"height="240px"alt=""></a></li>
-				<li>	<a href="/user/read_book/introduce"><img src="{{ url_for('static',filename='img/book_6.jpg')}}" width="150px"height="240px"alt=""></a></li>
-					<li>	<a href="/user/read_book/introduce"><img src="{{ url_for('static',filename='img/book_9.jpg')}}" width="150px"height="240px"alt=""></a></li>
-			</div>
+			<li><a href="/user/author/translate_option">
+				<img src="{{ url_for('static',filename='img/book_1.jpg')}}" height="300px" width="200px" >
+			</a></li>
+			<li><a href="#"><img src="{{ url_for('static',filename='img/book_9.jpg')}}" height="300px" width="200px" ></a></li>
+			<li><a href="#"><img src="{{ url_for('static',filename='img/book_2.jpg')}}" height="300px" width="200px" ></a></li>
+				<li><a href="#"><img src="{{ url_for('static',filename='img/book_3.jpg')}}" height="300px" width="200px" ></a></li>
+				<li><a href="#"><img src="{{ url_for('static',filename='img/book_4.jpg')}}" height="300px" width="200px" ></a></li>
+				<li><a href="#"><img src="{{ url_for('static',filename='img/book_5.jpg')}}" height="300px" width="200px" ></a></li>
+				<li><a href="#"><img src="{{ url_for('static',filename='img/book_7.jpg')}}" height="300px" width="200px" ></a></li>
+				<li><a href="#"><img src="{{ url_for('static',filename='img/book_8.jpg')}}" height="300px" width="200px" ></a></li>
+				</div>
 		</div>
 		
 		<div id="footer">
@@ -95,16 +95,6 @@
 				})
 				},'json')//登录用户
 				})
-
-			function readerenroll(){
-			window.location.href="/user/indexsucess";
-		}
-		$('#button').click(function(){
-			$.post('/user/login',{},function(data){
-			alert(data.msg);//判断用户的id是普通
-			}
-			},'json')//登录用户
-			})
 		</script>
 		</body>
 		</html>

@@ -3,20 +3,21 @@
 	<head>
 		<meta charset="utf-8" />
 		<title></title>
-			<link rel="stylesheet" href="{{ url_for('static' ,filename='css/bookintroduce.css')}}" type="text/css">
+		<link rel="stylesheet" href="{{ url_for('static',filename='css/bookintroduce.css')}}"type="text/css">
 	</head>
 	<body>
 		<!-- 第一部分 -->
 		<div class="wel">
-			<ul>
-				<li class='one'><a herf="#">语钟切换</a>
+			<ul><li class='one'><a herf="#">切换语言</a>
 				<ul class='twe animated'>
 				<li><a href="#">英文</a></li>
 				<li><a href="#">俄文</a></li>
 				<li><a href="#">韩文</a></li>
 				<li><a href="#">日文</a></li>
-				</ul></li>
-				<li class='one'><a href="/user/index">rt-books</a></li>
+
+
+				</ul></li>			
+				<li class='one'><a href="index.html">rt-books</a></li>
 				<li class='one'><a herf="#">玄幻</a>
 				<ul class='twe animated'>
 				<li><a href="#">英文</a></li>
@@ -49,46 +50,48 @@
 				<li class='one'>
 				<input type="search" name="" id="" value="查询书籍" style="width: 250px ; height: 30px;" />
 				<button type="button">搜索 </button></li>
-				<li class='one'><a href="/user/readerinformation">我的信息</a></li>
-				<li class='one'><a href="/user/index">退出登录</a></li>
+				<li class='one'><a href="userinformation.html">我的信息</a></li>
 			
 			</ul>
 		</div>
 		<!-- 第二部分 -->
-		<!-- <div id="img">
-			<img src="" />
-		</div> -->
-		<!-- 第三部分 -->
 		<div id="all">
 		<div id="head">
-		<div id="headl"><img src="{{ url_for('static' ,filename='img/b.jpg')}}" ></div>
-			<div id="headr">
+		<div id="headl"><img src="{{ url_for('static',filename='img/b.jpg')}}"></div>
+		<div id="headr">
 				<ul>
-					<li><h3>拉克丝的魔法棒</h3></li>
-					<li><h3>作者</h3></li>
-					<li><h3>简介</h3></li>
-					<li><button><a href="/user/read_book/start_read">免费试读</a></button>
+					<li>书名:<span>拉克丝的魔法棒</span></li>
+					<li>作者:<span>呜啦啦</span></li>
+					<li>简介:<h5>蓝与紫的霓虹中，浓密的钢铁苍穹下，数据洪流的前端，是科技革命之后的世界，也是现实与虚幻的分界。
+						　　钢铁与身体，过去与未来。
+						　　这里，表世界与里世界并存，面前的一切，像是时间之墙近在眼前。
+						　　黑暗逐渐笼罩。
+						　　可你要明白啊我的朋友，我们不能用温柔去应对黑暗，要用火。</h5></li>
+					<li><button> <a href="/user/read_book/start_read">点击阅读</a></button>
 					<button>加入书架</button>
 					<button>投票互动</button>
 					</li>
 				</ul>
 			</div>
 		</div>
+		<!-- 第三部分 -->
 		<div id="back">
+			<!-- 左边 -->
 			<span id="l">
-			<h4><a href="#">作品信息</a>
+			<h4>
+			<a href="#">作品信息</a>
 			<a href="#">目录（115章）</a>
-			</h4>
-	
-			<h4 style="font-family: kai;">虚空之杖，又名法穿棒，属性是暗裔，扭曲血肉材质，虚空之力杖芯，是符文之地居家旅行必备良品。
+			</h4>	
+			<h4>
+			虚空之杖，又名法穿棒，属性是暗裔，扭曲血肉材质，虚空之力杖芯，是符文之地居家旅行必备良品。
 　　穿越者未必要有系统——因为穿越者也可以成为别人的系统。
 　　【奖励任务：小黄毛必须死】：“看见那个叫伊泽瑞尔的小黄毛了吗？上吧，拉克丝，痛扁这个小偷一顿，我教你转职大元素使！”
 　　“就你叫伊泽瑞尔啊？拉克丝一键超神符文已装备！”
 　　关键词：英雄联盟，拉克丝，双城之战，符文之地，恕瑞玛，德玛西亚 </h4>
 
 <div id="newcontent">
-	<div style="font-size: larger;">最新章节</div>
 	<span id="newl">
+		<div>最新章节</div>
 		<li><a href="#">第九十章：受伤的麻雀与乌鸦与狗</a> <h5>12小时前</h5></li>
 		<li><a href="#">第九十章：受伤的麻雀与乌鸦与狗</a> <h5>2022-03-6</h5> </li>
 		<li><a href="#">第九十章：受伤的麻雀与乌鸦与狗</a> <h5>2022-03-6</h5></li>
@@ -108,6 +111,7 @@
 <div id="fan">
 	<div>粉丝互动</div>
 	<table border="1" cellspacing="0" cellpadding="0">
+	
 		<tr><td>猫咪酱：</td>
 		<td>作者写的好好看啊期待下一次更新！！</td>
 		</tr>
@@ -117,11 +121,21 @@
 		<tr><td>猫咪酱：</td>
 		<td>作者写的好好看啊期待下一次更新！！</td>
 		</tr>
+		<tr><td>猫咪酱：</td>
+			<td>作者写的好好看啊期待下一次更新！！</td>
+			</tr>
+			<tr><td>猫咪酱：</td>
+				<td>作者写的好好看啊期待下一次更新！！</td>
+				</tr>
+				<tr><td>猫咪酱：</td>
+					<td>作者写的好好看啊期待下一次更新！！</td>
+					</tr>
 	</table>
 	<textarea rows="3" cols="50">发表你的看法叭！</textarea>
 	<button type="button">点击发送</button>
 </div>
 </span>
+<!-- 右边 -->
 		<span id="r">
 		<div id="introduce">
 		<img src="" >
@@ -162,7 +176,7 @@
 			<div id="masterpiece">
 				<h4 style="display: inline;">其他作品</h4>
 				<h4 style="display: inline; padding-left: 100px;">更多</h4>
-				<img src="{{ url_for('static', filename='img/master.jpg') }}" style="display: block;padding-top: 10px; padding-left: 50px;" >
+				<img src="{{ url_for('static',filename='img/master.jpg')}}" style="display: block;padding-top: 10px; padding-left: 50px;" >
 				<h5>李莫愁想要杀了陆展元，魔童哪吒想要<br>得到百姓认同，葫芦娃想要救出爷爷，<br>绯红女巫想要干掉灭霸，后羿想要射落十</h5>
 			<button type="button" style="margin-left: 80px;">加入书架</button>
 			</div>
@@ -198,12 +212,6 @@
 		</div>
 		</span>
 		</div>
-	
-		<div id="footer">
-			<ul>
-				 <li><a href="#">重庆理工大学计算机科学与工程学院</a></li>
-				<li><a href="#">本站所收录的作品、社区话题、用户评论、用户上传内容或图片等均属用户个人行为。如前述内容侵害您的权益，欢迎举报投诉，一经核实，立即删除，本站不承担任何责任</a></li>
-			</ul>
-		</div>
-			</div>
+	</div>
+			
 	</body>

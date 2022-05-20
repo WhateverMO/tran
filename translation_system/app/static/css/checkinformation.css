@@ -1,11 +1,4 @@
-@font-face {
-	font-family:big;
-	src: url('../font/世界那么大.ttf');
-}
-@font-face {
-	font-family:kai;
-	src: url('../font/宋刻本秀楷体.ttf');
-}
+
 @font-face {
   font-family: 'icomoon';
   src:  url('../fonts/icomoon.eot?2qiqq5');
@@ -24,10 +17,11 @@ a{
 	text-decoration: none;
 	color: #000000;
 }
+a:hover{
+	color:#e74c3c;
+}
 .wel {
-		width: 1340px;
-		height: 60px;
-		
+		height: 20%;	
 	}/* //子元素有浮动需要为父元素添加高度 */
 .one {
 	display: inline;
@@ -66,24 +60,18 @@ a{
 }
 }
 #check {
-	margin-left: 400px;
-    opacity: 0.8;
-	width: 400px;
-	height: 700px;
-	border-radius: 10%;
+	margin-top: 7%;
+	margin-left: 30%;
+	border: #000000 1px solid;
+	width: 40%;
 }
-#check ul li {
-	font-family: kai;
-	margin: 20px;
-	font-size: 20px;
-	float:right;
+#check ul li{
+	margin-bottom: 4%;
+	font-size: large;
 }
-#check button{
-	height: 40px;
-	width: 200px;
-	border-radius: 10%;
+#check button{	
+width: 40%;
 }
-
 /* 第三部分 */
 #footer li{
 	font-size: small;

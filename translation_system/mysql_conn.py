@@ -12,7 +12,7 @@ from timeit import default_timer
 # Password = 'Shejidasai123456'
 # Charset='utf8'
 
-Host = 'localhost'
+Host = 'rt-books.ltd'
 Port = 3306
 Db = 'test_db'
 User = 'root'

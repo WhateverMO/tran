@@ -16,10 +16,6 @@ body{
 }
 }
 @font-face {
-	font-family:kai;
-	src: url('../font/宋刻本秀楷体.ttf');
-}
-@font-face {
   font-family: 'icomoon';
   src:  url('../fonts/icomoon.eot?2qiqq5');
   src:  url('../fonts/icomoon.eot?2qiqq5#iefix') format('embedded-opentype'),
@@ -39,8 +35,7 @@ a{
 }
 .wel {
 	display: flex;
-	height: 30%;
-		
+	height: 30%;	
 	}/* //子元素有浮动需要为父元素添加高度 */
 .one {
 	display: inline;
@@ -62,38 +57,33 @@ a{
     display: block;
 }
 /* 第二部分 */
-#c1{
-	height: 400px;
-	width: 600px;
-	margin-left: 400px;
-	margin-top: 50px;
-}
 #c1 ul li{
 	margin-bottom: 20px;
+	margin-left: 40%;
 }
 #c1 ul li span{
 	margin-right: 20px;
 }
-img{
-	margin-left: 100px;
-}
 #c2{
-	height: 600px;
-	width: 600px;
-	margin-left: 400px;
-	margin-top: 50px;
+	height: 50%;
+	width:60%;
+	margin-left: 20%;
 }
 #c3{
 	position: fixed;
-	top: 400px;
-	left: 250px;
-	font-size: 20px;
+	top:50%;
+	left: 10%;
+}
+#c3 ul li{
+	margin-bottom: 50%;
 }
 #c4{
 	position: fixed;
-	top: 500px;
-	right: 250px;
-	font-size: 20px;
+	top:50%;
+	right:15%;
+}
+#c4 ul li{
+	margin-bottom: 30%;
 }
 /* 第三部分 */
 #footer li{

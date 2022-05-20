@@ -3,14 +3,14 @@
 	<head>
 		<meta charset="utf-8">
 		<title></title>
-		<link rel="stylesheet" href="{{ url_for('static' ,filename='css/enroll.css')}}" type="text/css">
+		<link rel="stylesheet" href="{{ url_for('static',filename='css/enroll.css')}}"type="text/css">
 		<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
 	</head>
 	<body>
 		<!-- 第一部分 -->
 	<div class="wel">
 		<ul>
-			<li class='one' ><a href="/user/index">rt-books</a></li>
+			<li class='one' ><a href="index.html" >rt-books</a></li>
 			<li class='one'><a herf="#">切换语言</a>
 			<ul class='twe animated'>
 			<li><a href="#">英文</a></li>
@@ -57,11 +57,11 @@
 		<!-- 第二部分 -->
 		<div id="box">
 			<div id="core3">
-				<img src="{{ url_for('static',filename='img/welcom.jpeg')}}"width="300px"height="300px" >
+			<img src="{{ url_for('static',filename='img/welcom.jpeg')}}"width="300px"height="300px" >
 			</div>
 		<div id="core4">
-			<h1 style="font-family: 'kai';">用户登录</h1>
-			<span class="name">&nbsp</span>用户id：&nbsp<input type="text" id="user_id" value="请输入你的用户id" /><br /><br />
+			<h1 ">用户登录</h4>
+			<span class="name"></span>用户id:&nbsp<input type="text" id="name" value="请输入你的用户名" /><br /><br />
 			<span class="ma"> </span>密码 : &nbsp<input type="password" name="" id="password" value="请输入密码" /><br /><br />
 		<button type="button"id="button">立即登录</button><br /><br />
 		<div id="register">
@@ -79,29 +79,27 @@
 		</div>
 		
 		<script>
-		function readerenroll(){
-			window.location.href="/user/indexsucess";
-		}
-		function authorenroll(){
-			window.location.href="/user/indexsucessauthor";
-		}
-		$('#button').click(function(){
-			var user_id=$('#user_id').val();
-			var password=$('#password').val();
+			function success() {
+            window.location.href = "/user/indexsucess";
+        }
+        	function successauothor() {
+            window.location.href = "/user/indexsucessauothor";
+        }
 
+			$('#button').click(function(){
+			var user_id=$('#name').val();
+			var password=$('#password').val();
 			$.post('/user/login',{user_id:user_id,password:password},function(data){
 			alert(data.msg);//判断用户的id是普通
-			if(data.code==202){
-			authorenroll();
-			}
-			else if(data.code==200){
-			readerenroll();//读者
-			}
+			if(data.code==200)
+			success();
+			else if(data.code==202)
+			successauothor();
 			},'json')//登录用户
 			})
 			
-		$('#user_id').click(function(){
-			$('#user_id').val('');
+		$('#name').click(function(){
+			$('#name').val('');
 		})
 		$('#password').click(function(){
 			$('#password').val('');

@@ -9,10 +9,6 @@ a:hover{
 	color: #DB1C29;
 }
 @font-face {
-	font-family:kai;
-	src: url('../font/宋刻本秀楷体.ttf');
-}
-@font-face {
   font-family: 'icomoon';
   src:  url('../fonts/icomoon.eot?2qiqq5');
   src:  url('../fonts/icomoon.eot?2qiqq5#iefix') format('embedded-opentype'),
@@ -153,6 +149,7 @@ textarea:focus{
 	border-color: transparent;
 outline: none;
 }
+book
 /* 第三部分 */
 #footer li{
 	font-size: small;

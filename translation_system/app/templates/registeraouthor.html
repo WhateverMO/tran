@@ -3,14 +3,14 @@
 	<head>
 		<meta charset="utf-8">
 		<title></title>
-		<link rel="stylesheet" href="{{ url_for('static' ,filename='css/registeraouthor.css')}}" type="text/css">
+		<link rel="stylesheet" href="{{ url_for('static',filename='css/registeraouthor.css')}}"type="text/css">
 		<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
 	</head>
 	<body>
 		<!-- 第一部分 --><div id="top">
 	<div class="wel">
 		<ul>
-			<li class='one' ><a href="/user/index" >rt-books</a></li>
+			<li class='one' ><a href="index.html" >rt-books</a></li>
 			<li class='one'><a herf="#">玄幻</a>
 			<ul class='twe animated'>
 			<li><a href="#">英文</a></li>
@@ -43,18 +43,17 @@
 			<li class='one'>
 			<input type="search" name="" id="search" value="查询书籍" style="width: 250px ; height: 30px;" />
 			<button type="button"> 搜索</button></li>
-			<li class='one'><a href="/user/readerinformatio">我的信息</a></li>
-		
+			<li class='one'><a href="checkinformation.html">我的信息</a></li>
 		</ul>
 	</div>	
 		<!-- 第二部分 -->
 		<div id="core">
 			<div id="core1">
-				<img src="{{ url_for('static' ,filename='img/welcom.jpeg')}}" width="300px"height="300px" >
+				<img src="{{ url_for('static',filename='img/welcom.jpeg')}}"width="300px"height="300px" >
 			</div>
 			<div id="core2">
 				<h1 style="font-family: 'kai';">译者注册 &nbsp</h4>
-						<span class="name">&nbsp&nbsp</span>用户名：&nbsp<input type="text" id="author_name" value="请输入你的用户名" /><br /><br />
+						<span class="name">&nbsp&nbsp</span>作者名：&nbsp<input type="text" id="author_name" value="请输入你的用户名" /><br /><br />
 							<span class="phone"> </span>手机号码：&nbsp<input type="text" id="phone" value="请输入你的手机号码" /><br /><br />
 						<button type="button" id="button">立即注册</button><br /><br />
 						<div id="enroll">
@@ -75,29 +74,27 @@
 		</div>
 			
 		<script>
-
-		function registeraouthor(){
+			function registeraouthor(){
 			window.location.href="/user/indexsucessauthor";
 		}
-		$('#button').click(function(){
-			var author_name=$('#author_name').val();
-			$.post('/user/author_register',{author_name:author_name},function(data){
-				alert(data.msg);
-				if(data.code==200)
-				registeraouthor();
-
-			},'json')//
-		})
-		
-		$('#author_name').click(function(){
+			$('#author_name').click(function(){
 			$('#author_name').val('');
 		})
 			$('#phone').click(function(){
 			$('#phone').val('');
 		})
-		$('#search').click(function(){
+			$('#search').click(function(){
 			$('#search').val('');
 		})
+			$('#button').click(function(){
+			var author_name=$('#author_name').val();
+			$.post('/user/author_register',{author_name:author_name},function(data){
+			alert(data.msg);//判断用户的id是普通
+			if(data.code==200){
+		 	registeraouthor()
+			}
+			},'json')//登录用户
+			})
 		</script>
 	</body>
 </html>

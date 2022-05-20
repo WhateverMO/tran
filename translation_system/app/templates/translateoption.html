@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title></title>
-		<link rel="stylesheet" href="{{ url_for('static' ,filename='css/translateoption.css')}}" type="text/css">
+		<link rel="stylesheet" href="{{ url_for('static',filename='css/translateoption.css')}}"type="text/css">
 		<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
 	</head>
 	<body>
@@ -16,7 +16,7 @@
 				<li><a href="#">韩文</a></li>
 				<li><a href="#">日文</a></li>
 				</ul></li>
-				<li class='one' ><a href="/user/indexsucessauthor" >rt-books</a></li>
+			<li class='one' ><a href="indexsucessauothor.html" >rt-books</a></li>
 			<li class='one'><a herf="#">玄幻</a>
 			<ul class='twe animated'>
 			<li><a href="#">英文</a></li>
@@ -49,12 +49,12 @@
 			<li class='one'>
 			<input type="search" name="" id="search" value="查询书籍" style="width: 250px ; height: 30px;" />
 			<button type="button">搜索 </button></li>
-			<li class='one'><a href="/user/index" >退出登录</a></li>
-			<li class='one' ><a href="/user/sucesscheckpassword" >修改密码</a></li>
+			<li class='one'><a href="index.html" >退出登录</a></li>
+			<li class='one' ><a href="sucesscheckpassword.html" >修改密码</a></li>
 		<li class='one' ><a href="#">我的信息</a>
 		<ul class='twe animated'>
-		<li><a href="/user/readerinformation">读者信息</a></li>
-		<li><a href="/user/authorinfo">作者信息</a></li>
+		<li><a href="readerinformation.html">读者信息</a></li>
+		<li><a href="authorinfo.html">作者信息</a></li>
 		
 		</ul>
 	</div>
@@ -62,18 +62,18 @@
 
 			<div id="b1">
 				<div id="photo">
-					<a href="/user/read_book/introduce"><img src="{{ url_for('static',filename='img/book_9.jpg')}}" width="150px"height="240px"alt=""></a>
+					<img src="{{ url_for('static',filename='img/b.jpg')}}" >
 					</div>
 					<div id="intro">
 						<li>
 						<div class="mui-input-row">
-							<label>图书id: </label>
+							<label>图书id: <span>123</span></label>
 						</div>
 						</li>
 						
 						<li>
 						<div class="mui-input-row">
-							<label>作者id: </label>
+							<label>作者id: <span> 123</span></label>
 						</div>
 						</li>
 						
@@ -85,8 +85,8 @@
 									<option value="">科幻</option>
 										<option value="">玄幻</option>
 											<option value="">爱情</option>
-												<option value=""> 和</option>
-													<option value="">和</option>
+												<option value=""> 恐怖</option>
+													<option value="">惊悚</option>
 							</select>
 						</div>
 						</li>
@@ -114,8 +114,7 @@
 						</div>
 						</li>
 						
-						<li><button type="button" id="button"><a href="/user/author/translate">建立翻译</a></button></li>
-					
+						<li><button type="button" class=""><a href="/user/author/translate">翻译新书</a></button></li>
 					</div>		
 				</div>		
 	
@@ -128,16 +127,8 @@
 		</div>
 		
 		
-	<script>
-			function readerenroll(){
-			window.location.href="/user/author/translate;
-		}
-		$('#button').click(function(){
-			$.post('/user/author/tranlate_option',{},function(data){
-			alert(data.msg);//判断用户的id是普通
-			}
-			},'json')//登录用户
-			})
+		
+		<script>
 		</script>
 	</body>
 </html>

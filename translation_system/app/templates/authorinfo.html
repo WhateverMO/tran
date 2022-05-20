@@ -3,7 +3,8 @@
 	<head>
 		<meta charset="utf-8" />
 		<title></title>
-			<link rel="stylesheet" href="{{ url_for('static' ,filename='css/authorinfo.css')}}" type="text/css">
+		<link rel="stylesheet" href="{{ url_for('static',filename='css/authorinfo.css')}}"type="text/css">
+		<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
 	</head>
 	<body>
 		<div class="wel">
@@ -15,7 +16,7 @@
 				<li><a href="#">韩文</a></li>
 				<li><a href="#">日文</a></li>
 				</ul></li>
-				<li class='one' ><a href="/user/indexsucessauthor">rt-books</a></li>
+				<li class='one' ><a href="/user/indexsucessauthor" id="return">rt-books</a></li>
 				<li class='one'><a herf="#">玄幻</a>
 				<ul class='twe animated'>
 				<li><a href="#">英文</a></li>
@@ -48,64 +49,54 @@
 				<li class='one'>
 				<input type="search" name="" id="" value="查询书籍" style="width: 250px ; height: 30px;" />
 				<button type="button">搜索 </button></li>
-				<li class='one'><a href="/user/index" >退出登录</a></li>
-				<li class='one' ><a href="/user/sucesscheckpassword" >修改密码</a></li>
-				<li class='one'><a href="/user/readerinformation" >我的用户信息</a></li>
+				<li class='one'><a href="index.html" >退出登录</a></li>
+				<li class='one' ><a href="sucesscheckpassword.html" >修改密码</a></li>
+				<li class='one'><a href="userinformation.html" >我的信息</a></li>
 			
 			</ul>
 		</div>
-		
-		<div id="all">	
+		<div></div>
+		<div id="l">
+			<img src="./img/f.png" alt="">
+			</div>
 			<div id="c">
-					<img src="{{ url_for('static' ,filename='img/headimg.jpg')}}"height="150px"width="150px" >
-					<span class="tro">
-					<div>用户名：{{ author_name }}	</div>
-					<div>author id：{{ author_id }}</div>
-
-		    		<button type="button"><a href="/user//userinformation/modification">修改个人信息</a></button></span>
-						<button type="button"><a href="user/userinformation/modification/update_avatar">修改个人头像</a></button></span>
-					<div id="c2">	
-					<div style="margin-left: 10px;">
-						  个人简介:{{ author_describe }}
-						</div>
-						<div style="margin-left: 10px;">
-						  性别:{{ gender }}
-						</div>
-						<div style="margin-left: 10px;">
-						  地区:{{ area }}
-						</div>
+			<div>用户名:<span>{{username}}</span></div>
+			<div>rt-books账号:<span>{{user_id}}</span></div>
+			<div>年龄:<span>18</span></div>
+			<div>地区:<span>{{user_area}}</span></div>
+			<div>个人介绍:</div>
+			<div> {{user_describe}}</div>
+			<div>  
+				<a href="#">粉丝数</a> 
+				<a href="#">作品阅读数</a>
+				<a href="#">点赞数</a>
+			</div>
+			<button> <a href="/user/userinformation/modification">修改个人信息</a></button>
+		</div>
 						
-						<div id="focus">
-							<span><a href="#">作品数目</a></span></span>
-							<span><a href="#">粉丝数</a></span></span>
-							<span><a href="">点赞数</a></span></span>
-							<span><a href="#">作品浏览度</a></span></span>		
-						</div>
-						
-						<div id="num">
-							<span><span>27</span>
-								<span><span>27</span>
-									<span><span>27</span>
-										<span><span>27</span>
-						</div>								
-					</div>	
-				</div>
-					
-									
+				
 				<div id="c3">
-						<div id="nav">
-			        		作品
-			<ul>
-				<li>1  书名 阅读时间</li>
-					<li>2  书名 阅读时间</li>
-						<li>3  书名 阅读时间</li>
-							<li>4  书名 阅读时间</li>
-											</ul>
-							</div>
-						</div>
-		
-	
-			
+					<h2>我的作品</h2>
+				<table border="1"cellspacing="0" cellpadding="0">
+					<tr> 
+						<th>书名</th>
+						<th>图书简介</th>
+						<th>阅读时间</th>
+					</tr>
+				
+					<tr> 
+						<th>蘑菇圈</th>
+						<th>包括《蘑菇圈》和《三只虫草》两部小说。作品延续阿来一贯擅长描写的主题：辽阔神秘的藏区、复杂闪光的人性、以及古老与现代的拉扯平衡。两部故事分别从藏区物产入手展开故事，将主角的命运与荒诞的时代连接，即使现实的压力从未停歇，人性中纯净的力量依然像蘑菇一样生机勃勃，随时破土而出。文字流畅易读，回味悠长。</th>
+						<th>2022.01.04</th>
+					</tr>
+				
+					<tr> 
+						<th>妖怪谈义</th>
+						<th>柳田国男，日本现代民俗学奠基人，妖怪学者。其著作《远野物语》《妖怪谈义》《日本的传说》等对日本民俗学、妖怪学产生了深远影响。周作人曾深受柳田民俗学思想的影响，成为中国民俗学研究的开拓者。本书汇集柳田国男不同时期的妖怪研究学术著作，通过传说对比、分类神怪、探寻源流，深入分析了日本独特的妖怪文化，是柳田国男晚年集大成之作</th>
+						<th>2022.04.09</th>
+					</tr>
+				</table>
+				</div>
 		</div>
 		
 		<!-- 第三部分-->
@@ -115,6 +106,24 @@
 					<li><a href="#">本站所收录的作品、社区话题、用户评论、用户上传内容或图片等均属用户个人行为。如前述内容侵害您的权益，欢迎举报投诉，一经核实，立即删除，本站不承担任何责任</a></li>
 				</ul>
 			</div>
-		
+
+		<script>
+
+			function successauthor() {
+            window.location.href = "/user/indexsucessauthor";
+        }
+        	function success() {
+            window.location.href = "/user/indexsucess";
+        }
+			$('#return').click(function(){
+			$.get('/user/judge_author',{},function(data){
+				if(data.code==200)
+				 successauthor()
+				 else if(data.code==4000)
+				 success()
+			},'json')//用户注册
+		})
+
+	</script>
 	</body>
 	

@@ -53,7 +53,8 @@ def register():
         # 校验参数
         if not all([username, password, password2]):
             return jsonify(msg="参数不完整", code=4002)
-
+        # print(password)
+        # print(password2)
         if password != password2:
             return jsonify(msg="两次密码不一致", code=4001)
 
@@ -101,20 +102,19 @@ def check_session():
     user_id = session.get("user_id")
     username = session.get("username")
     user_gender = session.get("gender")
-    user_birthday = session.get("birthday")
     user_area = session.get("area")
     user_describe = session.get("user_describe")
     user_avatar = session.get("picture")
     is_author = session.get("is_author")
     if user_id is not None:
-        return jsonify(username=username, user_birthday=user_birthday, user_area=user_area,
+        return jsonify(username=username, user_area=user_area,
                        user_gender=user_gender, user_describe=user_describe, user_avatar=user_avatar,
                        is_author=is_author, user_id=user_id, code=200)
     else:
         return jsonify(msg='未登录', code=4000)
 
 
-# 退出登录
+# 退出登
 @user.route('/logout', methods=['DELETE'])
 @user_login_required  # 验证用户登录的装饰器
 def logout():
@@ -139,13 +139,13 @@ def user_information():
             return jsonify("查不到该用户或该用户未登录", code=4000)
         username = data.get("user_name")
         user_gender = data.get("gender")
-        user_birthday = data.get("birthday")
         user_area = data.get("area")
         user_describe = data.get("user_describe")
         user_avatar = data.get("picture")
         is_author = data.get("is_author")
+        print(user_describe)
         return render_template('readerinformation.html',
-                               username=username, user_birthday=user_birthday, user_area=user_area,
+                               username=username, user_area=user_area,
                                user_gender=user_gender, user_describe=user_describe, user_avatar=user_avatar,
                                is_author=is_author, user_id=user_id)
 
@@ -162,15 +162,19 @@ def change_password():
         # 校验参数完整
         if not all([new_password, password, uid]):
             return jsonify(msg="参数不完整", code=4000)
-
         try:
             data_user = select_user(uid)
         except Exception as e:
             print(e)
             return jsonify(msg="获取用户信息失败", code=4000)
+        print(uid)
+        print(password)
+        print(new_password)
+        print(data_user.get("password"))
         # 用数据库里的密码与用户输入的密码进行对比验证
-        if password != data_user.get("password"):
-            return jsonify(msg="原始密码错误", code=4000)
+
+        if not login_user(uid, password):
+            return jsonify(msg='原始密码错误',code=4000)
 
         # 修改密码
         update_user(uid, {"password": new_password})
@@ -180,7 +184,7 @@ def change_password():
         else:
             return jsonify(msg="修改密码成功", code=202)
     if request.method == 'GET':
-        return render_template("sucesscheckpassword.html")
+        return render_template("checkpassword.html")
 
 
 # 用户修改基本信息  111
@@ -198,12 +202,15 @@ def update_user_information():
         user_gender = data.get("gender")
         user_area = data.get("area")
         user_describe = data.get("user_describe")
+        update_user(user_id,
+        {"user_name": username, "gender": user_gender, "area": user_area, "user_describe": user_describe})
         # 保存成功并返回
         session["username"] = username
         session["user_describe"] = user_describe
         session["user_gender"] = user_gender
         session["user_area"] = user_area
-        return jsonify(mag="保存成功", username=username, user_id=user_id, user_gender=user_gender, user_area=user_area,
+
+        return jsonify(msg="保存成功", username=username, user_id=user_id, user_gender=user_gender, user_area=user_area,
                        user_describe=user_describe, code=200)
 
 
@@ -333,7 +340,8 @@ def readerinformation():
         author_name = data.get('author_name')
         author_describe = data.get('author_describe')
 
-        return render_template('authorinfo.html', author_name=author_name, author_id=author_id, author_describe=author_describe,)
+        return render_template('authorinfo.html', author_name=author_name, author_id=author_id,
+                               author_describe=author_describe, )
 
 
 # 文本文件读写时记得要设置utf-8格式

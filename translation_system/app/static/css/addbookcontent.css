@@ -9,10 +9,6 @@ a:hover{
 	color: #DB1C29;
 }
 @font-face {
-	font-family:big;
-	src: url('../font/世界那么大.ttf');
-}
-@font-face {
 	font-family:kai;
 	src: url('../font/宋刻本秀楷体.ttf');
 }
@@ -35,7 +31,7 @@ a:hover{
 .one {
 	display: inline;
 	padding:20px;
-	font-family:white;
+	font-family:kai;
 	font-size: 20px;
 	position: relative;
 	float: left;
@@ -45,7 +41,7 @@ a:hover{
 		position: absolute;
 	}
 .twe li{
-		width: 10vh;
+		width: 15vh;
 	}
 .one:hover ul {
     display: block;
@@ -58,7 +54,7 @@ a:hover{
 	border-radius: 5px;
 	width: 10vh;
 	height: 5vh;
-	margin-left: 20vh;
+	margin-left: 1vh;
 	background-color: #CCCCCC;
 	cursor:pointer;
 }
@@ -77,7 +73,7 @@ body{
 	background-size: 500%;
 	animation: bjanimation 10s linear infinite;
 	font-size: kai;
-	height: 150vh;
+	height: 180vh;
 }
 @keyframes bjanimation{
 	
@@ -103,33 +99,38 @@ body{
 
 
 #content{
-	height: 100vh;
-	width: 100vh;
+	height: 120vh;
+	width: 120vh;
 	margin: auto;
 	border: #000000 solid 1px;
 }
+#all ul li{
+	margin-bottom: 5vh;
+}
 #section{
 margin-left: 60vh;
-height: 10vh;
-width: 10vh;
+margin-bottom: 2vh;
+}
+#section span{
+	margin-left: 20vh;
 }
 #button{
-	height: 10vh;
-	width: 100vh;
-	margin-top: 10vh;
-	margin-left: 60vh;
+	margin-left: 55vh;
 }
-button{
+#button button{
+	margin-top: 2vh;
 	margin-left: 20vh;
 	border-radius: 5px;
+	width: 20vh;
+	height: 5vh;
 	background-color: #CCCCCC;
 	cursor:pointer;
-	width: 20vh;
 }
-h3{
+#name{
 	text-align: center;
+	font-size: 30px;
+	font-family: kai;
 }
-
 textarea{
 background-color: transparent;
 border: none;
@@ -145,5 +146,6 @@ outline: none;
 #footer{
 text-align: center;
 height: 10vh;
+margin-top: 15vh;
 
 }

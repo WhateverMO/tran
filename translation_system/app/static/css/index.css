@@ -1,4 +1,4 @@
-ul li{
+ li{
 	list-style: none;
 }
 a{
@@ -16,7 +16,7 @@ input:focus{
 }
 body{
 	background: linear-gradient(125deg,#72b576,#97f17b,#79b974,#8ce79f,#86f890);
-	background-size: 500%;
+	background-size: 100%;
 	animation: bjanimation 10s linear infinite;
 	font-size: kai;
 	height: 150vh;
@@ -54,16 +54,10 @@ body{
   font-display: block;
 }
 
-/* 第二部分 */
+/* 第一部分 */
 *{
 	padding: 0;
 	margin: 0;
-}
-#cen{
-	border-bottom: 1px solid;
-	margin-left: 40px;
-	margin-right: 40px;
-	margin-bottom: 10px;
 }
 .langguge {
 	display: none;
@@ -80,86 +74,80 @@ body{
 display: inline-block;
 }
 #one{
-	margin-left: 30vh;
-	margin-bottom: 2vh;
-	margin-top: 2vh;
-	
+	margin-left: 13%;
+	margin-bottom: 1%;
+	margin-top: 1%;	
 }
-
-/* 第三部分 */
-.nav{
-display: flex;
-justify-content: center;
-height: 8vh;
+.wel{
+	border-bottom: 1px solid;
 }
+/* 第二部分 */
 .nav button{
-	width: 20vh;
-	height: 5vh;
-	border-radius: 5px;
-	margin-left: 2vh;
+	width: 10%;
+	border-radius: 5%;
+	margin-left: 2%;
 	cursor: pointer;
 }
-.search{
-width: 50vh;
-height: 5vh;
-border-radius: 5px;
+.nav input{
+width: 30%;
+margin-left: 30%;
+height: 30%;
 }
+.nav{
+	margin-top: 2%;
+}
+/* 第三部分 */
+.choose{
+	text-align: center;
+	margin-top: 1%;
+	
+	}
+	.choose ul li{
+	margin-left: 8%;
+	display:inline-block;
+	}
 /* 第四部分 */
 .center{
 	font-family:kai;
-	font-size: 20px;
-	display: flex;
-	margin-top:2vh;
-	height: 200px;
+	font-size: large;
+	height: 30%;
+	margin-top: 2%;
 }
-.choose{
-display:flex;
-flex-direction: column;
-}
-.choose ul li{
-display: flex;
-margin-left: 7%;
-}
-.choose ul{
-display: flex;
-justify-content: center;
-margin-top: 1vh;
-}
-.masterpiece ul {
-	display: flex;
-	flex-direction: row;
-	margin-bottom: 15%;
-}
-.masterpiece {
-display: flex;
-flex-direction: column;
-width: 15%;
-margin-left: 6%;
+.masterpiece{
+	float: left;
+	font-size: larger;	
+	margin-left: 3%;
 }
 .masterpiece ul li{
-	display: flex;
-	margin-left: 10%;
+	margin-bottom: 70%;
 }
 #banner{
-	width: 60%;
+	float: left;
+	width: 80%;
+	height: 100%;
+	margin-left: 5%;
 }
 .imgList{
-		position: relative;
+		position: relative;;
 	}
 .imgList li {
 	  display: inline-block;
 	  position: absolute;
  }
+ .imgList li img{
+	height: 350px;
+	width: 900px;
+ }
  .leftBtn{
-position: absolute;
-z-index:99;/*层级调高*/
-	left: 350px;
-	 top:300px;
+	position: absolute;
+	z-index:99;/*层级调高*/
+	left: 20%;
+	top:50%;
  }
    .rightBtn{
 	position: absolute;
-	right: 350px;
-	 top:300px;
+	right:20% ;
+	top:50%;
 	    z-index:99;/*层级调高*/
    }
    .leftBtn:hover,.rightBtn:hover{
@@ -184,61 +172,31 @@ z-index:99;/*层级调高*/
    .focusList a.cur{
      background: rgba(255, 255, 255, .6);
    }
-.hot{
-	display: flex;
-
-}
 /* 第五部分 */
 .reconmend{
 	font-family:kai;
-	font-size: 20px;
+	font-size: larger;
 	margin-left: 5%;
 	margin-top: 10%;
 	border-top: 1px solid black;
 	margin-right: 5%;
-}
-#reconmendlist{
-	margin-bottom: 1%;
-}
-.reconmend span{
-	margin-bottom: 4%;
+	height: 70%;
 }
 .week{
-	display: inline-block;
-	margin-left: 6%;
+float: left;	
+width: 27%;
+margin-left: 5%;
 }
-.weekl{
-	float: left;
-}
-.weekr{
-	float: right;
-}
-.editor{
-	display: inline-block;
-	margin-left: 8%;
-}
-.editorl{
-	float: left;
-}
-.editorr{
-	float: right;
-}
-.new{
-	float: right;
-	margin-right: 100px;
-}
-.newl{
-	float: left;
-}
-.newr{
-	float: right;
+.week li{
+margin-top: 3%;	
 }
 #share{
-	height: 200px;
+	height: 30%;
 	font-family: kai;
-border-top: 1px solid;
-margin-left: 5%;
-margin-right: 5%;
+	border-top: 1% solid;
+	margin-left: 5%;
+	margin-right: 5%;
+	border-top: 1px solid black;
 }
 #share img{
 	float: right;
@@ -269,9 +227,15 @@ transform: scale(1.2,1.2);
 	margin-bottom: 20px;
 }
 #hotbook img:hover	
-{transform: scale(1.2,1.2);
+{
+transform: scale(1.2,1.2);
 	}
 	
+#book img{
+	width: 15%;
+	height:15%;
+	
+}
 #readingfeel{
 		font-family: kai;
 		margin-left: 20vh;
@@ -287,5 +251,4 @@ transform: scale(1.2,1.2);
 #footer{
 text-align: center;
 margin-top: 2vh;
-
 }

@@ -1,9 +1,5 @@
 
 @font-face {
-	font-family:kai;
-	src: url('../font/宋刻本秀楷体.ttf');
-}
-@font-face {
   font-family: 'icomoon';
   src:  url('../fonts/icomoon.eot?2qiqq5');
   src:  url('../fonts/icomoon.eot?2qiqq5#iefix') format('embedded-opentype'),
@@ -39,11 +35,11 @@ a{
 	color: #000000;
 }
 a:hover{
-	color: #00FFFF;
+	color: #b41523;
 }
 .wel {
-		width: 1340px;
-		height: 60px;
+		height:10%;
+		width: 100%;
 	}/* //子元素有浮动需要为父元素添加高度 */
 .wel button{
 		border-radius: 7px;
@@ -75,44 +71,37 @@ a:hover{
     display: block;
 }
 /* 第二部分 */
-
-#c{
-	padding-top: 20px;
-	height: 300px ;
-	width: 700px;
-	margin-left: 400px;
-	font-family: kai;
-	font-size: 20px;
+#l{
+	float:right;
+	margin-right: 30%;
+	margin-top: 5%;
 }
-
-#num span{
-	margin-left: 50px;
+#c {
+	height: 50%;
+	margin-left: 20%;
+	margin-top: 10%;
 }
-#focus span{
-	margin: 15px;
-}
-
-#c2 div{
-	margin-top: 20px;
+#c div{
+margin-bottom: 2%;
 }
 #c button{
-	height: 40px;
-	width: 120px;
+	width: 20%;
 }
-.tro{
-	display: inline-block;
-	margin-left: 40px;
+ #c3 table{
+	width: 60%;
+	margin-left: 20%;
 }
-.tro div{
-margin-bottom: 20px;
+#c3 h2{
+	text-align: center;
 }
-
+#c3{
+	margin-top: 5%;
+}
 /* 第三部分 */
 #footer li{
 	font-size: small;
 }
 #footer{
 text-align: center;
-height:10vh;
-margin-top:10vh;
+margin-top: 5vh;
 }

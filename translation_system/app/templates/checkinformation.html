@@ -1,108 +1,153 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8"/>
-    <title></title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/checkinformation.css') }}" type="text/css">
-</head>
-<body>
-<div class="wel">
-    <ul>
-        <li class='one'><a herf="#">切换语言</a>
-            <ul class='twe animated'>
-                <li><a href="#">英文</a></li>
-                <li><a href="#">俄文</a></li>
-                <li><a href="#">韩文</a></li>
-                <li><a href="#">日文</a></li>
-            </ul>
-        </li>
-        <li class='one'><a href="/user/indexsucess">rt-books</a></li>
-        <li class='one'><a herf="#">玄幻</a>
-            <ul class='twe animated'>
-                <li><a href="#">英文</a></li>
-                <li><a href="#">俄文</a></li>
-                <li><a href="#">韩文</a></li>
-                <li><a href="#">日文</a></li>
-            </ul>
-        </li>
-        <li class='one'><a herf="#">都市</a>
-            <ul class='twe animated'>
-                <li><a href="#">英文</a></li>
-                <li><a href="#">俄文</a></li>
-                <li><a href="#">韩文</a></li>
-                <li><a href="#">日文</a></li>
-            </ul>
-        </li>
-        <li class='one'><a href="#">仙侠</a>
-            <ul class='twe animated'>
-                <li><a href="#">英文</a></li>
-                <li><a href="#">俄文</a></li>
-                <li><a href="#">韩文</a></li>
-                <li><a href="#">日文</a></li>
-            </ul>
-        </li>
-        <li class='one'><a href="#">历史</a>
-            <ul class='twe animated'>
-                <li><a href="#">英文</a></li>
-                <li><a href="#">俄文</a></li>
-                <li><a href="#">韩文</a></li>
-                <li><a href="#">日文</a></li>
-            </ul>
-        </li>
-        <li class='one'><a herf="#">更多</a></li>
-        <li class='one'>
-            <input type="search" name="" id="" value="查询书籍" style="width: 250px ; height: 30px;"/>
-            <button type="button">搜索</button>
-        </li>
-        <li class='one'><a href="/user/index">退出登录</a></li>
-        <li class='one'><a href="/user/register">注册</a></li>
-        <li class='one'><a href="/user/readerinformation">我的信息</a></li>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link rel="stylesheet" href="{{ url_for('static',filename='css/checkinformation.css')}}"type="text/css">
+		<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+		</head>
+	<body>
+		<div class="wel">
+			<ul>
+				<li class='one'><a herf="#">切换语言</a>
+				<ul class='twe animated'>
+				<li><a href="#">英文</a></li>
+				<li><a href="#">俄文</a></li>
+				<li><a href="#">韩文</a></li>
+				<li><a href="#">日文</a></li>
+				</ul></li>	
+				<li class='one' ><a href="indexsucess.html">rt-books</a></li>
+				<li class='one'><a herf="#">玄幻</a>
+				<ul class='twe animated'>
+				<li><a href="#">英文</a></li>
+				<li><a href="#">俄文</a></li>
+				<li><a href="#">韩文</a></li>
+				<li><a href="#">日文</a></li>
+				</ul></li>			
+				<li class='one'><a herf="#">都市</a>
+				<ul class='twe animated'>
+				<li><a href="#">英文</a></li>
+				<li><a href="#">俄文</a></li>
+				<li><a href="#">韩文</a></li>
+				<li><a href="#">日文</a></li>
+				</ul></li>
+				<li class='one' ><a href="#">仙侠</a>
+				<ul class='twe animated'>
+				<li><a href="#">英文</a></li>
+				<li><a href="#">俄文</a></li>
+				<li><a href="#">韩文</a></li>
+				<li><a href="#">日文</a></li>
+				</ul></li>
+				<li class='one' ><a href="#">历史</a>
+				<ul class='twe animated'>
+				<li><a href="#">英文</a></li>
+				<li><a href="#">俄文</a></li>
+				<li><a href="#">韩文</a></li>
+				<li><a href="#">日文</a></li>
+				</ul></li>
+				<li class='one' ><a herf="#">更多</a></li>
+				<li class='one'>
+				<input type="search" name="" id="search" value="查询书籍" style="width: 250px ; height: 30px;" />
+				<button type="button">搜索 </button></li>
+				<li class='one'><a href="index.html" >退出登录</a></li>
+				<li class='one'><a href="userinformation.html">我的信息</a></li>
+			
+			</ul>
+		</div>
+		<!-- 第二部分 -->
+		<div id="all">
+			<div id="check">
+				<ul>
+					<li>用户名:<input type="text" id="username" value="{{user_name}}" /></li>
+					<li><div class="mui-input-row mui-checkbox ">
+						性别：
+						<label><input name="gender" type="radio" value="man" />man </label> 
+						<label><input name="gender" type="radio" value="woman" />woman </label> 
+					</div>
+					</li>
+					<li>生日:<select id="year">
+						<option value="">2000</option>
+							<option value="">2001</option>
+								<option value="">2002</option>
+									<option value="">2003</option>
+					</select>
+					<select id="mouth">
+						<option value="">1</option>
+							<option value="">2</option>
+								<option value="">3</option>
+									<option value="">4</option>
+										<option value="">5</option>
+					</select>
+					<select id="day">
+						<option value="">1</option>
+							<option value="">2</option>
+								<option value="">3</option>
+									<option value="">4</option>
+										<option value="">5</option>
+					</select></li>
+					<li class="job">年龄<select id="age">
+						<option value="">18</option>
+							<option value="">19</option>
+								<option value="">20</option>
+									<option value="">21</option>
+									<option value="">22</option>
+					</select>
+				</li>
+					<li>地区: <select id='area'>
+						<option value="">重庆</option>
+							<option value="">四川</option>
+								<option value="">安徽</option>
+									<option value="">河北</option>
+										<option value="">沈阳</option>
+											<option value="">长春</option>
+					</select></li>
+					<li>个人介绍：<textarea id="user_describe" rows="2" cols="20"></textarea></li>
+					<li><button type="button" id="button">提交修改</button></li>
+				</ul>
+			</div>
+		</div>
+		<!-- 第三部分-->
+		<div id="footer">
+			<ul>				
+				<li><a href="#">重庆理工大学计算机科学与工程学院</a></li>
+				<li><a href="#">本站所收录的作品、社区话题、用户评论、用户上传内容或图片等均属用户个人行为。如前述内容侵害您的权益，欢迎举报投诉，一经核实，立即删除，本站不承担任何责任</a></li>
+			</ul>			
+		</div>
+			</body>
+			<script type="text/javascript">
+			$('#search').click(function(){
+			$('#search').val('');
+		})
+			$('#username').click(function(){
+			$('#username').val('');
+		})
 
-    </ul>
-</div>
-<!-- 第二部分 -->
-<div id="all">
-    <div id="check">
-        <ul>
-            <li>用户名:<input type="text" id="user_name" value=""/></li>
-            <li>
-            性别:<select name="gender">
-                <option value="">woman</option>
-                <option value="">man</option>
-            </select>
-            </li>
-              <li>地区: <select name="" class='place'>
-                <option value="">重庆</option>
-                <option value="">北京</option>
-                <option value="">天津</option>
-                <option value="">四川</option>
-                <option value=""></option>
-                <option value=""></option>
-            </select></li>
-            <li>简介：<textarea rows="2" cols="20" id="user_describe">简介</textarea></li>
-            <li>
-               <button type="button"id="button">提交修改</button>
-            </li>
-        </ul>
-    </div>
-</div>
-<!-- 第三部分-->
-<div id="footer">
-    <ul>
-        <li><a href="#">重庆理工大学计算机科学与工程学院</a></li>
-        <li><a href="#">本站所收录的作品、社区话题、用户评论、用户上传内容或图片等均属用户个人行为。如前述内容侵害您的权益，欢迎举报投诉，一经核实，立即删除，本站不承担任何责任</a></li>
-    </ul>
-</div>
-<script>
-    $('#button').click(function () {
-        var user_name = $('#user_name').val();
-        var area =$('#place option:selected').val();
-        var gender =$('#gender option:selected').val();
-        var user_describe =$('#user_describe').val();
-       			$.post('user/userinformation/modification',{user_name:user_name,area:area,gender:gender,user_describe:user_describe},function(data){
-			alert(data.msg);//判断用户的id是普通
-			},'json')//登录用户
+		function checkinfor() {
+            window.location.href = "/user/readerinformation";
+        }
+
+			$('#button').click(function(){
+				$.ajax({
+					type:'post',
+					url:'/user/userinformation/modification',
+					dataType:'json',
+					data:{
+						user_name:$('#username').val(),
+						area:$('#area').find('option:selected').text(),
+						user_describe:$('#user_describe').val(),
+						gender:$("input[name='gender']:checked").val(),
+
+					},
+					success:function(re){
+					alert(re.msg)
+					if(re.code==200){
+					checkinfor()
+					}
+					},
+					error:function(){
+					}
+				})
+
 			})
-</script>
-
-</body>
+			</script>
+			
