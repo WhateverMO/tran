@@ -5,4 +5,4 @@ from flask_migrate import Migrate, command  # 管理数据库需要的脚本，�
 app = create_app("develop")
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=False,host='0.0.0.0',port=8000)

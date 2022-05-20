@@ -12,19 +12,19 @@ from timeit import default_timer
 # Password = 'Shejidasai123456'
 # Charset='utf8'
 
-Host = 'rt-books.ltd'
-Port = 3306
-Db = 'test_db'
-User = 'root'
-Password = 'Shejidasai123456'
-Charset='utf8'
-
-# Host = 'localhost'
+# Host = 'rt-books.ltd'
 # Port = 3306
 # Db = 'test_db'
 # User = 'root'
-# Password = 'shejidasai123456'
+# Password = 'Shejidasai123456'
 # Charset='utf8'
+
+Host = 'localhost'
+Port = 3306
+Db = 'test_db'
+User = 'root'
+Password = 'shejidasai123456'
+Charset='utf8'
 
 g_mysql_url = 'mysql+pymysql://%s:%s@%s:%d/%s?charset=%s' % (User, Password, Host, Port,Db,Charset)
 
